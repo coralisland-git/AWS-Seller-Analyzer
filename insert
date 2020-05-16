@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+import dbScript
+import traceback
+from utilities import get_year_from_sys_args
+from utilities import get_month_as_int
+
+from insert_utilities import download_log
+from insert_utilities import download_tab1
+from insert_utilities import download_tab2
+from insert_utilities import get_log_s3_key
+from insert_utilities import insert_csv_data_tab1
+from insert_utilities import insert_csv_data_tab2
+from insert_utilities import insert_master
+from insert_utilities import get_tab1_filename
+from insert_utilities import get_tab2_filename
+from insert_utilities import log_message
+from insert_utilities import upload_log
+
+
+
+
+log_file = None
+try:
+    print('Beginning insertion into database from {} and {}'.format(get_tab1_filename(), get_tab2_filename()))
+    download_log()
+    log_file = open(get_log_s3_key(), 'a')
+
+    download_tab1()
+    download_tab2()
+
+    msg = 'Inserting data into database from {} and {}'.format(get_tab1_filename(), get_tab2_filename())
+    log_message(msg, log_file)
+
+    dbScript.delete_data()
+
+    msg = 'DataMigration from excel to Staging table'
+    log_message(msg, log_file)
+
+    insert_csv_data_tab1()
+    msg = 'DataMigration to staging table for Tab1 : PASS'
+    log_message(msg, log_file)
+
+    insert_csv_data_tab2()
+    msg = 'DataMigration to staging table for Tab2 : PASS'
+    log_message(msg, log_file)
+
+    seller_name = get_tab2_filename().split("_")[1]
+    seller_uid = dbScript.get_seller_id(seller_name)
+    dbScript.verify_master_only_data(get_year_from_sys_args(),
+                                     get_month_as_int(),
+                                     seller_uid,
+                                     seller_name)
+
+    insert_master()
+    msg = 'DataMigration to Master table for Tab1 and Tab2 : PASS'
+    log_message(msg, log_file)
+    msg = 'Insertion completed succesfully for files {} and {}.'.format(get_tab1_filename(), get_tab2_filename())
+    log_message(msg, log_file)
+
+    log_file.close()
+
+    # upload the log file to S3
+    upload_log()
+
+except Exception as e:
+    dbScript.delete_data()
+    if log_file is not None:
+        msg = 'DataMigration from excel to Staging table : FAIL'
+        log_message(msg, log_file)
+        msg = 'Data from staging table has been truncated'
+        log_message(msg, log_file)
+        msg = 'DataMigration from Staging to Master table : FAIL'
+        log_message(msg, log_file)
+        msg = 'Error occured during Data migration :'
+        log_message(msg, log_file)
+        traceback.print_exc()
+        traceback.print_exc(file=log_file)
+        msg = 'Data migration Failed. Please check the log file for errors.'
+        log_message(msg, log_file)
+        log_file.close()
+    else:
+        print('Error running insert job.')
+        traceback.print_exc()
