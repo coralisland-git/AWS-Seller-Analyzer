@@ -82,6 +82,7 @@ def insert_count(year, month, seller_id, seller_company_name, lead_count, opport
 def delete_data():
     connection = get_redshift_connection()
     connection.execute('TRUNCATE TABLE us_gtmsales.stg_sellerleads')
+    connection.execute('TRUNCATE TABLE us_gtmsales.stg_selleropportunities')
     connection.execute('TRUNCATE TABLE us_gtmsales.stg_sellercampaigns')
     connection.close()
 

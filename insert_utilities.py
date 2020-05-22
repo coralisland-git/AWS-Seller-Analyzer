@@ -33,7 +33,7 @@ def download_tab1():
 
 
 def get_tab2_filename():
-    return get_input_filename() + 'Tab2_accepted.csv'
+    return get_input_filename() + 'tab2_accepted.csv'
 
 
 def download_tab2():
@@ -46,6 +46,22 @@ def download_tab2():
     )
     s3_client = get_s3_client()
     s3_client.download_file(get_s3_bucket(), s3_tab2_key, s3_tab2_key)
+
+
+def get_tab3_filename():
+    return get_input_filename() + 'tab3_accepted.csv'
+
+
+def download_tab3():
+    tab3_filename = get_tab3_filename()
+
+    s3_tab3_key = '{}/{}/Successful Files/{}'.format(
+        get_year_from_sys_args(),
+        get_month_from_sys_args(),
+        tab3_filename
+    )
+    s3_client = get_s3_client()
+    s3_client.download_file(get_s3_bucket(), s3_tab3_key, s3_tab3_key)
 
 
 def get_log_file_prefix():
@@ -96,9 +112,8 @@ def insert_csv_data_tab1():
     connection = get_redshift_connection()
 
     q3 = "COPY us_gtmsales.stg_sellerleads(selleruid, sellercompanyname, gtmcampaignsource, campaignname, " \
-         "crmsystemcampaignid, campaigncreatedate, leadid, createdate, leadcountry, leadtype, leadstatus, opportunityid, " \
-         "convertdate, opportunitytype, opportunitystatus,awsmarketopportunity, pipelinerevenue, " \
-         "windate,billedrevenue,boxmonth,boxyear,insertiondate) " \
+         "crmsystemcampaignid, campaigncreatedate, leadid, createdate, leadcountry, leadtype, leadstatus, " \
+         "boxmonth, boxyear, insertiondate) " \
          "FROM 's3://{}/{}/{}/Successful Files/{}' " \
          "CREDENTIALS 'aws_access_key_id={};aws_secret_access_key={}' " \
          "CSV timeformat 'auto' dateformat 'auto';".format(get_s3_bucket(),
@@ -115,16 +130,36 @@ def insert_csv_data_tab1():
 def insert_csv_data_tab2():
     connection = get_redshift_connection()
 
+    q3 = "COPY us_gtmsales.stg_selleropportunities(" \
+         "selleruid, campaigncreatedate, opportunityid, convertdate, opportunitycountry, opportunitytype, " \
+         "opportunitystatus, awsmarketopportunity, pipelinerevenue, accountname, accountid, windate, billedrevenue, " \
+         "boxmonth, boxyear, insertiondate )" \
+         "FROM 's3://{}/{}/{}/Successful Files/{}' " \
+         "CREDENTIALS 'aws_access_key_id={};aws_secret_access_key={}' " \
+         "CSV timeformat 'auto' dateformat 'auto';".format(get_s3_bucket(),
+                                                           get_year_from_sys_args(),
+                                                           get_month_from_sys_args(),
+                                                           get_tab2_filename(),
+                                                           get_s3_config()['access_key_id'],
+                                                           get_s3_config()['secret_access_key'])
+
+    connection.execution_options(autocommit=True).execute(q3)
+    connection.close()
+
+
+def insert_csv_data_tab3():
+    connection = get_redshift_connection()
+
     q3="COPY us_gtmsales.stg_sellercampaigns(selleruid, sellercompanyname, gtmcampaignsource, campaignname, " \
        "crmsystemcampaignid,campaigncreatedate,investment,boxmonth,boxyear,insertiondate) " \
        "FROM 's3://{}/{}/{}/Successful Files/{}' " \
        "CREDENTIALS 'aws_access_key_id={};aws_secret_access_key={}' " \
        "CSV timeformat 'auto' dateformat 'auto';".format(get_s3_bucket(),
-                                                         get_year_from_sys_args(),
-                                                         get_month_from_sys_args(),
-                                                         get_tab2_filename(),
-                                                         get_s3_config()['access_key_id'],
-                                                         get_s3_config()['secret_access_key'])
+                                                        get_year_from_sys_args(),
+                                                        get_month_from_sys_args(),
+                                                        get_tab3_filename(),
+                                                        get_s3_config()['access_key_id'],
+                                                        get_s3_config()['secret_access_key'])
 
     connection.execution_options(autocommit=True).execute(q3)
     connection.close()
