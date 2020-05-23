@@ -1234,34 +1234,34 @@ def Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, shee
     print("--------------------------------------------------------------------", file=log_file)
     print("\n10. Previous Vs Current Counts/Totals", file=log_file)
     if curr_lead >= prev_lead:
-        print("Current Lead Count          : {}  |   Previous Lead Count        : {}  |   PASS".format(curr_lead, prev_lead), file=log_file)
+        print("Previous Lead Count          : {}  |   Current Lead Count        : {}  |   PASS".format(prev_lead, curr_lead), file=log_file)
     else:
         flag += 1
-        print("Current Lead Count          : {}  |   Previous Lead Count        : {}  |   FAIL".format(curr_lead, prev_lead), file=log_file)
+        print("Previous Lead Count          : {}  |   Current Lead Count        : {}  |   FAIL".format(prev_lead, curr_lead), file=log_file)
 
     if curr_opportunity >= prev_opportunity:
-        print("Current Opportunity Count   : {}  |   Previous Opportunity Count : {}  |   PASS".format(curr_opportunity, prev_opportunity), file=log_file)
+        print("Previous Opportunity Count   : {}  |   Current Opportunity Count : {}  |   PASS".format(prev_opportunity, curr_opportunity), file=log_file)
     else:
         flag += 1
-        print("Current Opportunity Count   : {}  |   Previous Opportunity Count : {}  |   FAIL".format(curr_opportunity, prev_opportunity), file=log_file)
+        print("Previous Opportunity Count   : {}  |   Current Opportunity Count : {}  |   FAIL".format(prev_opportunity, curr_opportunity), file=log_file)
 
     if curr_win_loss >= prev_win_loss:
-        print("Current Win Date Count      : {}  |   Previous Win Date Count    : {}  |   PASS".format(curr_win_loss, prev_win_loss), file=log_file)
+        print("Previous Win Date Count      : {}  |   Current Win Date Count    : {}  |   PASS".format(prev_win_loss, curr_win_loss), file=log_file)
     else:
         flag += 1
-        print("Current Win Date Count      : {}  |   Previous Win Date Count    : {}  |   FAIL".format(curr_win_loss, prev_win_loss), file=log_file)
+        print("Previous Win Date Count      : {}  |   Current Win Date Count    : {}  |   FAIL".format(prev_win_loss, curr_win_loss), file=log_file)
 
     if curr_campaign >= prev_campaign:
-        print("Current Campaign Count      : {}  |   Previous Campaign Count    : {}  |   PASS".format(curr_campaign, prev_campaign), file=log_file)
+        print("Previous Campaign Count      : {}  |   Current Campaign Count    : {}  |   PASS".format(prev_campaign, curr_campaign), file=log_file)
     else:
         flag += 1
-        print("Current Campaign Count      : {}  |   Previous Campaign Count    : {}  |   FAIL".format(curr_campaign, prev_campaign), file=log_file)
+        print("Previous Campaign Count      : {}  |   Current Campaign Count    : {}  |   FAIL".format(prev_campaign, curr_campaign), file=log_file)
 
     if curr_tot_investment >= prev_tot_investment:
-        print("Current Total Investment    : {}  |   Previous Total Investment  : {}  |   PASS".format(curr_tot_investment, prev_tot_investment), file=log_file)
+        print("Previous Total Investment    : {}  |   Current Total Investment  : {}  |   PASS".format(prev_tot_investment, curr_tot_investment), file=log_file)
     else:
         flag += 1
-        print("Current Total Investment    : {}  |   Previous Total Investment  : {}  |   FAIL".format(curr_tot_investment, prev_tot_investment), file=log_file)
+        print("Previous Total Investment    : {}  |   Current Total Investment  : {}  |   FAIL".format(prev_tot_investment, curr_tot_investment), file=log_file)
 
     if flag == 0:
         counterval=0
