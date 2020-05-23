@@ -33,12 +33,11 @@ def download_tab1():
 
 
 def get_tab2_filename():
-    return get_input_filename() + 'tab2_accepted.csv'
+    return get_input_filename() + 'Tab2_accepted.csv'
 
 
 def download_tab2():
     tab2_filename = get_tab2_filename()
-
     s3_tab2_key = '{}/{}/Successful Files/{}'.format(
         get_year_from_sys_args(),
         get_month_from_sys_args(),
@@ -49,7 +48,7 @@ def download_tab2():
 
 
 def get_tab3_filename():
-    return get_input_filename() + 'tab3_accepted.csv'
+    return get_input_filename() + 'Tab3_accepted.csv'
 
 
 def download_tab3():
@@ -110,9 +109,8 @@ def upload_log():
 
 def insert_csv_data_tab1():
     connection = get_redshift_connection()
-
-    q3 = "COPY us_gtmsales.stg_sellerleads(selleruid, sellercompanyname, gtmcampaignsource, campaignname, " \
-         "crmsystemcampaignid, campaigncreatedate, leadid, createdate, leadcountry, leadtype, leadstatus, " \
+    q3 = "COPY us_gtmsales.stg_sellerleads_v1(selleruid, sellercompanyname, gtmcampaignsource, campaignname, " \
+         "crmsystemcampaignid, campaigncreatedate, leadid, createdate, leadcountry, leadstatus, " \
          "boxmonth, boxyear, insertiondate) " \
          "FROM 's3://{}/{}/{}/Successful Files/{}' " \
          "CREDENTIALS 'aws_access_key_id={};aws_secret_access_key={}' " \
@@ -129,9 +127,9 @@ def insert_csv_data_tab1():
 
 def insert_csv_data_tab2():
     connection = get_redshift_connection()
-
-    q3 = "COPY us_gtmsales.stg_selleropportunities(" \
-         "selleruid, campaigncreatedate, opportunityid, convertdate, opportunitycountry, opportunitytype, " \
+    q3 = "COPY us_gtmsales.stg_selleropportunities_v1(" \
+         "selleruid, sellercompanyname,  gtmcampaignsource, campaignname, crmsystemcampaignid, " \
+         "campaigncreatedate, opportunityid, convertdate, opportunitycountry, " \
          "opportunitystatus, awsmarketopportunity, pipelinerevenue, accountname, accountid, windate, billedrevenue, " \
          "boxmonth, boxyear, insertiondate )" \
          "FROM 's3://{}/{}/{}/Successful Files/{}' " \
@@ -149,9 +147,8 @@ def insert_csv_data_tab2():
 
 def insert_csv_data_tab3():
     connection = get_redshift_connection()
-
-    q3="COPY us_gtmsales.stg_sellercampaigns(selleruid, sellercompanyname, gtmcampaignsource, campaignname, " \
-       "crmsystemcampaignid,campaigncreatedate,investment,boxmonth,boxyear,insertiondate) " \
+    q3="COPY us_gtmsales.stg_sellercampaigns_v1(selleruid, sellercompanyname, gtmcampaignsource, campaignname, " \
+       "crmsystemcampaignid, campaigncreatedate, investment, boxmonth, boxyear, insertiondate) " \
        "FROM 's3://{}/{}/{}/Successful Files/{}' " \
        "CREDENTIALS 'aws_access_key_id={};aws_secret_access_key={}' " \
        "CSV timeformat 'auto' dateformat 'auto';".format(get_s3_bucket(),
@@ -169,5 +166,6 @@ def insert_master():
     connection = get_redshift_connection()
     connection.execution_options(autocommit=True).execute(open('sql/create_leadcountry_to_geo_code.sql', 'r').read())
     connection.execution_options(autocommit=True).execute(open('sql/insert_mst_sellerleads.sql', 'r').read())
+    connection.execution_options(autocommit=True).execute(open('sql/insert_mst_selleropportunities.sql', 'r').read())
     connection.execution_options(autocommit=True).execute(open('sql/insert_mst_sellercampaigns.sql', 'r').read())
     connection.close()

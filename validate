@@ -28,7 +28,7 @@ from validate_utilities import get_year_as_int
 from validate_utilities import get_seller_name
 from validate_utilities import is_alnum_max_50_chars
 from validate_utilities import validate_lead_country_column
-
+import pdb
 
 
 global Column_Error, file_name_err, Win_Match, start_a2, sellernm_t1, sellernm_t2, sellernm_t3, date, month
@@ -143,11 +143,8 @@ def filenmcheck(log_file):
         Column_missing_tab2, misplaced_column_2 = Find_Columns.find_columns_tab2(get_src_file_path(), log_file)
         print("\n#Excel Structure, Tab 3", file = log_file)
         Column_missing_tab3, misplaced_column_3 = Find_Columns.find_columns_tab3(get_src_file_path(), log_file)
-
         if Column_missing_tab1 or Column_missing_tab2 or Column_missing_tab3:
-            Column_Error = len(Column_missing_tab1) + len(Column_missing_tab2) + len(Column_missing_tab3) 
-                         + len(misplaced_column_1) + len(misplaced_column_2) + len(misplaced_column_3)
-        
+            Column_Error = len(Column_missing_tab1) + len(Column_missing_tab2) + len(Column_missing_tab3) + len(misplaced_column_1) + len(misplaced_column_2) + len(misplaced_column_3)        
     else:
         print("No such file:", get_src_file_path())
         # all done
@@ -508,7 +505,7 @@ def tab1reader(log_file):
                 print("Total number of rows FAILED                : {}".format(Lead_Status), file = log_file)
 
     ERRTab1List = [Seller_Company_Name_error, GTM_Campaign_Source, Campaign_Name, CRM_System_Campaign_ID, Campaign_Create_Date, Lead_ID,
-                   Create_Date, err_cnt_lead_country, Lead_Type, Lead_Status, sellernm_t1, sellernm_t2, sellernm_t3, Column_Error, file_name_err]
+                   Create_Date, err_cnt_lead_country, Lead_Type, Lead_Status, sellernm_t1, sellernm_t2, sellernm_t3, Column_Error, file_name_err]    
 
     tab2reader(ERRTab1List, log_file, df, sheet, xlsx)  
 
@@ -545,12 +542,12 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
 
     for i in range(0, numcols):
         one_based_column_position = i + 1
-        col_name = re.sub('[*]', '', sheet.cell_value(0, i))
+        col_name = re.sub('[*]', '', sheet1.cell_value(0, i))
 
         if col_name == "Opportunity ID":  # newly adjusted (Was at column 11)
             print("\nOpportunity ID Column::", file=log_file)
             for y in range(1, numrows):
-                opportunity_id = sheet.cell_value(y, i)
+                opportunity_id = sheet1.cell_value(y, i)
                 try:
                     if str(opportunity_id) != '' and len(str(opportunity_id)) > 30:
                         Opportunity_ID += 1
@@ -572,7 +569,7 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
         elif col_name == "Convert Date":
             print("\nConvert Date Column::", file=log_file)
             for y in range(1, numrows):
-                convert_date = sheet.cell_value(y, i)
+                convert_date = sheet1.cell_value(y, i)
                 try:
                     if str(convert_date) != '':
                         date = str(convert_date)
@@ -638,7 +635,7 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
         elif col_name == "Opportunity Type":  # previously as converted_status
             print("\nOpportunity Type Column::", file=log_file)
             for y in range(1, numrows):
-                opportunity_type = sheet.cell_value(y, i)
+                opportunity_type = sheet1.cell_value(y, i)
                 try:
                     if opportunity_type.lower() == 'sql' or opportunity_type.lower() == 'sqo' or opportunity_type == '':
                         opportunity_type
@@ -661,7 +658,7 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
         elif col_name == "Opportunity Status":  # newly added Opportunity Status
             print("\nOpportunity Status Column::", file=log_file)
             for y in range(1, numrows):
-                opportunity_status = sheet.cell_value(y, i)
+                opportunity_status = sheet1.cell_value(y, i)
                 try:
                     if opportunity_status.lower() == 'valid' or opportunity_status.lower() == 'closed' or opportunity_status.lower() == \
                             'lost' or opportunity_status.lower() == 'junk' or str(opportunity_status) == '':
@@ -686,7 +683,7 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
         elif col_name == "AWS Marketplace Opportunity":  # newly added previously AWS_Marketplace_Opportunity?
             print("\nAWS Marketplace Opportunity Column::", file=log_file)
             for y in range(1, numrows):
-                aws_marketplace_opportunity = sheet.cell_value(y, i)
+                aws_marketplace_opportunity = sheet1.cell_value(y, i)
                 try:
                     if aws_marketplace_opportunity.lower() == 'yes' or aws_marketplace_opportunity.lower() == 'no' or aws_marketplace_opportunity.lower() == 'not reportable' or aws_marketplace_opportunity == '':
                         aws_marketplace_opportunity
@@ -712,7 +709,7 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
             # but no commas are given in .xl file
             print("\nPipeline Revenue Column::", file=log_file)
             for y in range(1, numrows):  # for traversing rows
-                pipeline_revenue = sheet.cell_value(y, i)
+                pipeline_revenue = sheet1.cell_value(y, i)
                 try:
                     if pipeline_revenue != '':
                         data = int(pipeline_revenue)
@@ -739,7 +736,7 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
         elif col_name == "Win Date":
             print("\nWin Date Column::", file=log_file)
             for y in range(1, numrows):  # for traversing rows
-                win_date = sheet.cell_value(y, i)
+                win_date = sheet1.cell_value(y, i)
                 try:
                     if str(win_date) != '':
                         date = xlrd.xldate.xldate_as_datetime(win_date, wb.datemode)
@@ -774,7 +771,7 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
         elif col_name == "Billed Revenue":
             print("\nBilled Revenue Column::", file=log_file)
             for y in range(1, numrows):  # for traversing rows
-                billed_revenue = sheet.cell_value(y, i)
+                billed_revenue = sheet1.cell_value(y, i)
                 try:
                     if billed_revenue != '':
                         data = int(billed_revenue)
@@ -803,15 +800,15 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
 
     ERRTab2List = [Opportunity_ID, Convert_Date, Opportunity_Type,
                    Opportunity_Status, AWS_Opportunity, AWS_Marketplace_Opportunity, Opportunity_ID, Pipeline_Revenue,
-                   Win_Loss, Billed_Revenue, sellernm_t1, sellernm_t2, sellernm_t3, Column_Error, file_name_err]
+                   Win_Loss, Billed_Revenue]
 
-    tab3reader(ERRTab1List, ERRTab2List, log_file, df, sheet, xlsx)
+    tab3reader(ERRTab1List, ERRTab2List, log_file, df, sheet, sheet1, xlsx)
     log_file.close()
 
 
 
 # --------- RULE 2 VALIDATIONS ---------
-def Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, xlsx):
+def Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, sheet1, xlsx):
     global date
     global month
     CampName_CRMId_err = 0
@@ -825,6 +822,7 @@ def Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, xlsx
     Duplicampaign = 0
 
     numrows = sheet.nrows
+    numrows1 = sheet1.nrows
 
     global Column_missing_tab1
     global Column_missing_tab2
@@ -838,82 +836,82 @@ def Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, xlsx
     # CHECKING OPPORTUNITY COLUMNS MISSING OR NOT
     pass_values_opportunity = 0
     fail_values_opportunity = 0
-    print("\n6. Validate Conditionally Required Fields :: 2 scenarios", file = log_file)
-    print("Validate conditional opportunity fields", file=log_file)
-    for y in range(1, numrows):
-        try:
-            if sheet.cell_value(y, 10) == '':
-                if sheet.cell_value(y, 11) == '' and sheet.cell_value(y, 12) == "" and sheet.cell_value(y, 13) == '' and sheet.cell_value(y, 14) == '' and sheet.cell_value(y, 15) == '':
-                    pass_values_opportunity += 1
-                else:
-                    valid_opp_Err += 1
-                    fail_values_opportunity += 1
-                    print("Values found at:", y + 1, sheet.cell_value(y, 11), sheet.cell_value(y, 12),
-                          sheet.cell_value(y, 13)
-                          , sheet.cell_value(y, 14), sheet.cell_value(y, 15), "Should be blank instead", file=log_file)
+    # print("\n6. Validate Conditionally Required Fields :: 2 scenarios", file = log_file)
+    # print("Validate conditional opportunity fields", file=log_file)
+    # for y in range(1, numrows1):
+    #     try:
+    #         if sheet1.cell_value(y, 10) == '':
+    #             if sheet1.cell_value(y, 11) == '' and sheet1.cell_value(y, 12) == "" and sheet1.cell_value(y, 13) == '' and sheet1.cell_value(y, 14) == '' and sheet1.cell_value(y, 15) == '':
+    #                 pass_values_opportunity += 1
+    #             else:
+    #                 valid_opp_Err += 1
+    #                 fail_values_opportunity += 1
+    #                 print("Values found at:", y + 1, sheet1.cell_value(y, 11), sheet1.cell_value(y, 12),
+    #                       sheet1.cell_value(y, 13)
+    #                       , sheet1.cell_value(y, 14), sheet1.cell_value(y, 15), "Should be blank instead", file=log_file)
 
-            else:
-                if sheet.cell_value(y, 11) != '' and sheet.cell_value(y, 12) != '' and sheet.cell_value(y, 13) != '' and sheet.cell_value(y, 14) != '' and sheet.cell_value(y, 15) != '':
-                    pass_values_opportunity += 1
-                else:
-                    valid_opp_Err += 1
-                    fail_values_opportunity += 1
-                    if sheet.cell_value(y, 11) == '':
-                        print("Values found at row:", y + 1, "is/are blank at:", sheet.cell_value(0, 11), " FAIL", file=log_file)
-                    if sheet.cell_value(y, 12) == '':
-                        print("Values found at row:", y + 1, "is/are blank at:", sheet.cell_value(0, 13), " FAIL", file=log_file)
-                    if sheet.cell_value(y, 13) == '':
-                        print("Values found at row:", y + 1, "is/are blank at:", sheet.cell_value(0, 13), " FAIL", file=log_file)
-                    if sheet.cell_value(y, 14) == '':
-                        print("Values found at row:", y + 1, "is/are blank at:", sheet.cell_value(0, 14), " FAIL", file=log_file)
-                    if sheet.cell_value(y, 15) == '':
-                        print("Values found at row:", y + 1, "is/are blank at:", sheet.cell_value(0, 15), " FAIL", file=log_file)
-        except:
-            fail_values_opportunity += 1
-            print("Values found at row:", y + 1, "is/are blank at:", sheet.cell_value(0, 16), " FAIL", file=log_file)
+    #         else:
+    #             if sheet1.cell_value(y, 11) != '' and sheet1.cell_value(y, 12) != '' and sheet1.cell_value(y, 13) != '' and sheet1.cell_value(y, 14) != '' and sheet1.cell_value(y, 15) != '':
+    #                 pass_values_opportunity += 1
+    #             else:
+    #                 valid_opp_Err += 1
+    #                 fail_values_opportunity += 1
+    #                 if sheet1.cell_value(y, 11) == '':
+    #                     print("Values found at row:", y + 1, "is/are blank at:", sheet1.cell_value(0, 11), " FAIL", file=log_file)
+    #                 if sheet1.cell_value(y, 12) == '':
+    #                     print("Values found at row:", y + 1, "is/are blank at:", sheet1.cell_value(0, 13), " FAIL", file=log_file)
+    #                 if sheet1.cell_value(y, 13) == '':
+    #                     print("Values found at row:", y + 1, "is/are blank at:", sheet1.cell_value(0, 13), " FAIL", file=log_file)
+    #                 if sheet1.cell_value(y, 14) == '':
+    #                     print("Values found at row:", y + 1, "is/are blank at:", sheet1.cell_value(0, 14), " FAIL", file=log_file)
+    #                 if sheet1.cell_value(y, 15) == '':
+    #                     print("Values found at row:", y + 1, "is/are blank at:", sheet1.cell_value(0, 15), " FAIL", file=log_file)
+    #     except:
+    #         fail_values_opportunity += 1
+    #         print("Values found at row:", y + 1, "is/are blank at:", sheet1.cell_value(0, 16), " FAIL", file=log_file)
 
-    if valid_opp_Err == 0:
-        print("Conditional Opportunity fields : PASS", file=log_file)
-        print("TOTAL ROWS PASS                : {}".format(pass_values_opportunity), file=log_file)
-        print("TOTAL ROWS FAIL                : {}".format(fail_values_opportunity), file=log_file)
-    else:
-        print("Conditional Opportunity fields : FAIL", file=log_file)
-        print("TOTAL ROWS PASS                : {}".format(pass_values_opportunity), file=log_file)
-        print("TOTAL ROWS FAIL                : {}".format(fail_values_opportunity), file=log_file)
+    # if valid_opp_Err == 0:
+    #     print("Conditional Opportunity fields : PASS", file=log_file)
+    #     print("TOTAL ROWS PASS                : {}".format(pass_values_opportunity), file=log_file)
+    #     print("TOTAL ROWS FAIL                : {}".format(fail_values_opportunity), file=log_file)
+    # else:
+    #     print("Conditional Opportunity fields : FAIL", file=log_file)
+    #     print("TOTAL ROWS PASS                : {}".format(pass_values_opportunity), file=log_file)
+    #     print("TOTAL ROWS FAIL                : {}".format(fail_values_opportunity), file=log_file)
 
-    pass_values_win = 0
-    fail_values_win = 0
+    # pass_values_win = 0
+    # fail_values_win = 0
 
-    print("\nValidate conditional win date fields", file=log_file)
-    for y in range(1, numrows):
-        try:
-            if sheet.cell_value(y, 16) == "":
-                if sheet.cell_value(y, 17) == "":
-                    pass_values_win += 1
-                else:
-                    Win_Match += 1
-                    fail_values_win += 1
-                    print("Values found at:", y + 1, sheet.cell_value(y, 17), "Should be blank instead", file=log_file)
-            else:
-                if sheet.cell_value(y, 16) != "":
-                    if sheet.cell_value(y, 17) != "":
-                        pass_values_win += 1
-                    else:
-                        Win_Match += 1
-                        fail_values_win += 1
-                        if sheet.cell_value(y, 17) != '':
-                            print("Values found at row:", y + 1, "is/are blank at:", sheet.cell_value(0, 17), " FAIL", file=log_file)
-        except:
-            fail_values_win += 1
-            print("Values found at:", y + 1, sheet.cell_value(y, 17), "Something's wrong", file=log_file)
-    if Win_Match == 0:
-        print("Conditional win date fields : PASS", file=log_file)
-        print("TOTAL ROWS PASS             : {}".format(pass_values_win), file=log_file)
-        print("TOTAL ROWS FAIL             : {}".format(fail_values_win), file=log_file)
-    else:
-        print("Conditional win date fields : FAIL", file=log_file)
-        print("TOTAL ROWS PASS             : {}".format(pass_values_win), file=log_file)
-        print("TOTAL ROWS FAIL             : {}".format(fail_values_win), file=log_file)
+    # print("\nValidate conditional win date fields", file=log_file)
+    # for y in range(1, numrows1):
+    #     try:
+    #         if sheet1.cell_value(y, 16) == "":
+    #             if sheet1.cell_value(y, 17) == "":
+    #                 pass_values_win += 1
+    #             else:
+    #                 Win_Match += 1
+    #                 fail_values_win += 1
+    #                 print("Values found at:", y + 1, sheet1.cell_value(y, 17), "Should be blank instead", file=log_file)
+    #         else:
+    #             if sheet1.cell_value(y, 16) != "":
+    #                 if sheet1.cell_value(y, 17) != "":
+    #                     pass_values_win += 1
+    #                 else:
+    #                     Win_Match += 1
+    #                     fail_values_win += 1
+    #                     if sheet1.cell_value(y, 17) != '':
+    #                         print("Values found at row:", y + 1, "is/are blank at:", sheet1.cell_value(0, 17), " FAIL", file=log_file)
+    #     except:
+    #         fail_values_win += 1
+    #         print("Values found at:", y + 1, sheet1.cell_value(y, 17), "Something's wrong", file=log_file)
+    # if Win_Match == 0:
+    #     print("Conditional win date fields : PASS", file=log_file)
+    #     print("TOTAL ROWS PASS             : {}".format(pass_values_win), file=log_file)
+    #     print("TOTAL ROWS FAIL             : {}".format(fail_values_win), file=log_file)
+    # else:
+    #     print("Conditional win date fields : FAIL", file=log_file)
+    #     print("TOTAL ROWS PASS             : {}".format(pass_values_win), file=log_file)
+    #     print("TOTAL ROWS FAIL             : {}".format(fail_values_win), file=log_file)
 
 
     shit_names = xlsx.sheet_names
@@ -1063,7 +1061,7 @@ def Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, xlsx
 
     prev_lead, prev_opportunity, prev_win_loss, prev_campaign, prev_tot_investment = dbScript.fetch_counts(get_year_from_sys_args(), get_month_as_int(), seller_uid)
     curr_lead, curr_opportunity, curr_win_loss, curr_campaign, curr_tot_investment = Find_Columns.get_current_count(get_src_file_path())
-    flag = 0
+    flag = 0    
     print("\n##################################################################", file=log_file)
     print("\nValidations Part 4 :: Validation with Counter Table", file=log_file)
     print("--------------------------------------------------------------------", file=log_file)
@@ -1114,7 +1112,7 @@ def Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, xlsx
 
 
 # --------- TAB 2 VALIDATIONS ---------
-def tab3reader(ERRTab1List, ERRTab2List, log_file, df, sheet, xlsx):
+def tab3reader(ERRTab1List, ERRTab2List, log_file, df, sheet, sheet1, xlsx):
     wb = xlrd.open_workbook(get_src_file_path())
     sheet2 = wb.sheet_by_index(2)
     numrows = sheet2.nrows
@@ -1337,7 +1335,7 @@ def tab3reader(ERRTab1List, ERRTab2List, log_file, df, sheet, xlsx):
     ERRTab3List = [Seller_Company_Name_error_tab3, GTM_Campaign_Source_tab3, Campaign_Name_tab3,
                    CRM_System_Campaign_ID_tab3, Campaign_Create_Date_tab3, Investment_error_tab3]
     print("\n################################################################", file=log_file)
-    Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, xlsx)
+    Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, sheet1, xlsx)
 
 
 # --------- COUNT OF TOTAL ERRORS ---------
@@ -1355,15 +1353,15 @@ def count_error(filename, errlisttypo, errlistTab2, errlistTab3, errlistr2, log_
         print("Lead Type Error                   : ", errlisttypo[8], file=log_file)  # newly added
         print("Lead Status Error                 : ", errlisttypo[9], file=log_file)
 
-        print("Opportunity ID Error              : ", errlistTab3[0], file=log_file)
-        print("Convert Date Error                : ", errlistTab3[1], file=log_file)
-        print("Opportunity Type Error            : ", errlistTab3[2], file=log_file)
-        print("Opportunity Status Error          : ", errlistTab3[3], file=log_file)  # newly added Opportunity_Status
-        print("AWS Opportunity Error             : ", errlistTab3[4], file=log_file)  # newly added
-        print("AWS Marketplace Opportunity Error : ", errlistTab3[5], file=log_file)
-        print("Pipeline Revenue Error            : ", errlistTab3[6], file=log_file)
-        print("Win Date Error                    : ", errlistTab3[7], file=log_file)
-        print("Billed Revenue Error              : ", errlistTab3[8], file=log_file)
+        print("Opportunity ID Error              : ", errlistTab2[0], file=log_file)
+        print("Convert Date Error                : ", errlistTab2[1], file=log_file)
+        print("Opportunity Type Error            : ", errlistTab2[2], file=log_file)
+        print("Opportunity Status Error          : ", errlistTab2[3], file=log_file)  # newly added Opportunity_Status
+        print("AWS Opportunity Error             : ", errlistTab2[4], file=log_file)  # newly added
+        print("AWS Marketplace Opportunity Error : ", errlistTab2[5], file=log_file)
+        print("Pipeline Revenue Error            : ", errlistTab2[6], file=log_file)
+        print("Win Date Error                    : ", errlistTab2[7], file=log_file)
+        print("Billed Revenue Error              : ", errlistTab2[8], file=log_file)
 
         print("\n+++++Tab3 Errors+++++", file=log_file)
         print("Seller Company Name_error    : ", errlistTab3[0], file=log_file)
@@ -1379,7 +1377,7 @@ def count_error(filename, errlisttypo, errlistTab2, errlistTab3, errlistr2, log_
 
     r3count = sum(errlistTab3)
 
-    r4count = sum(errlistr2)
+    r4count = sum(errlistr2)    
 
     totalcount = r1count + r2count + r3count + r4count 
 
@@ -1456,7 +1454,7 @@ def fileaccepted(reqparam, log_file):
 
     colname_1 = df1.columns[2]
     colname_2 = df2.columns[2]
-    colname_3 = df3.columns[3]
+    colname_3 = df3.columns[2]
 
     df1[colname_1] = df1[colname_1].str.replace(',', '')
     df1[colname_1] = df1[colname_1].str.replace('\'', r'\'')

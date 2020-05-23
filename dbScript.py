@@ -36,7 +36,7 @@ def fetch_counts(year, month, seller_uid):
     if row:
         return row[0][4], row[0][5], row[0][6], row[0][7], row[0][8]
     else:
-        return 0, 0, 0, 0, 0
+      return 0, 0, 0, 0, 0
 
 
 def compare_count(box_year, box_month, seller_uid):
@@ -54,11 +54,11 @@ def compare_count(box_year, box_month, seller_uid):
               "Campaign.InvestmentTotal, Getdate() from (SELECT BoxYear, BoxMonth, SellerUID, SellerCompanyName, " \
               "COUNT (DISTINCT (CRMSystemCampaignID)) CAMPAIGNCOUNT1, COUNT ( (leadid)) LEADCOUNT, " \
               "sum ( case when OpportunityID='' then  0 else 1 end )  OpportunityCOUNT, " \
-              "sum ( case when WinLossDate='' then 0 else 1 end ) WinLossDateCOUNT FROM us_gtmsales.Stg_SellerLeads where " \
+              "sum ( case when WinLossDate='' then 0 else 1 end ) WinLossDateCOUNT FROM us_gtmsales.Stg_sellerleads_v1 where " \
               "BoxYear={} and  BoxMonth={} and SellerUID={} GROUP BY BoxYear, BoxMonth,SellerUID ,SellerCompanyName " \
               "ORDER BY  BoxYear, BoxMonth,SellerUID,SellerCompanyName) Leads inner join (select selleruid, sellercompanyname, " \
               "count(crmsystemcampaignid) CampaignCount2, sum(translate(investment, ',', '') ) InvestmentTotal from " \
-              "us_gtmsales.stg_SellerCampaigns where BoxYear={} and BoxMonth={} and selleruid={}  " \
+              "us_gtmsales.stg_sellercampaigns_v1 where BoxYear={} and BoxMonth={} and selleruid={}  " \
               "group by BoxYear,BoxMonth,selleruid,sellercompanyname) Campaign " \
               "on Campaign.SellerUID=Leads.SellerUID;".format(month, year, seller_uid, box_year, box_month, seller_uid)
     rows = connection.execute(compare)
@@ -81,9 +81,9 @@ def insert_count(year, month, seller_id, seller_company_name, lead_count, opport
 
 def delete_data():
     connection = get_redshift_connection()
-    connection.execute('TRUNCATE TABLE us_gtmsales.stg_sellerleads')
-    connection.execute('TRUNCATE TABLE us_gtmsales.stg_selleropportunities')
-    connection.execute('TRUNCATE TABLE us_gtmsales.stg_sellercampaigns')
+    connection.execute('TRUNCATE TABLE us_gtmsales.stg_sellerleads_v1')
+    connection.execute('TRUNCATE TABLE us_gtmsales.stg_selleropportunities_v1')
+    connection.execute('TRUNCATE TABLE us_gtmsales.stg_sellercampaigns_v1')
     connection.close()
 
 

@@ -20,31 +20,33 @@ def find_columns_tab1(loc, log_file):
     num_of_columns = 0
     for column in range(0, numcols):
         num_of_columns += 1
-        if column_names[column] not in sheet.cell_value(0, column):
+        column_title = sheet.cell_value(0, column).replace('\n', ' ')
+        if column_names[column] not in column_title:
             flag = 1
-            line = re.sub('[!@#$?]', '', sheet.cell_value(0, column))
+            line = re.sub('[!@#$?]', '', column_title)
             missing_columns[0].append(line)
             missing_columns[1].append(column + 1)
-            length_1 = len(sheet.cell_value(0, column))
+            length_1 = len(column_title)
             val = length-length_1
             space = ""
             for index in range(0, val+3):
                 space += " "
-            print("{}{} : FAIL (Should be : {})".format(sheet.cell_value(0, column), space, column_names[column]), file = log_file)
+            print("{}{} : FAIL (Should be : {})".format(column_title, space, column_names[column]), file = log_file)
         else:
-            length_1 = len(sheet.cell_value(0, column))
+            length_1 = len(column_title)
             val = length-length_1
             space = ""
             for index in range(0, val+3):
                 space += " "
-            line = re.sub('[!@#$?]', '', sheet.cell_value(0, column))
+            line = re.sub('[!@#$?]', '', column_title)
             print("{}{} : PASS".format(line, space), file = log_file)
 
 
     # CHECK IF COLUMNS ARE MISPLACED OR SPELLING IS WRONG
     for names in range(0, len(missing_columns[0])):
         for column in range(0, numcols):
-            if missing_columns[0][names] == sheet.cell_value(0, column):
+            column_title = sheet.cell_value(0, column).replace('\n', ' ')
+            if missing_columns[0][names] == column_title:
                 misplaced_columns.append(column + 1)
 
     if num_of_columns == 18 and flag == 0:
@@ -72,46 +74,50 @@ def find_columns_tab2(loc, log_file):
     ################################## FOR SHEET 2 ###################################
     sheet = wb.sheet_by_index(1)
     numcols = sheet.ncols
-    column_names = ["Campaign Create Date", "Opportunity ID", "Convert Date", "Opportunity Country", 
-                    "Opportunity Status", "AWS Marketplace Opportunity", "Pipeline Revenue", "Account Name", 
-                    "Account Id", "Win Date", "Billed Revenue"]
+    column_names = ["Seller Company Name", "GTM Campaign Source", "Campaign Name", "CRM System Campaign ID",
+                    "Campaign Create Date", "Opportunity ID", "Convert Date", 
+                    "Opportunity Country", "Opportunity Status", "AWS Marketplace Opportunity", "Pipeline Revenue", 
+                    "Account Name", "Account ID", "Win Date", "Billed Revenue"]
     missing_columns = [[], []]
-    misplaced_columns = []
-
+    misplaced_columns = []    
     length = len("AWS Marketplace Opportunity")
 
     # COUNTING NUMBER OF COLUMNS
     num_of_columns = 0
     for column in range(0, numcols):
         num_of_columns += 1
-        if column_names[column] not in sheet.cell_value(0, column):
+        column_title = sheet.cell_value(0, column).replace('\n', ' ')
+        if column_names[column] not in column_title:
             flag = 1
-            line = re.sub('[!@#$?]', '', sheet.cell_value(0, column))
+            line = re.sub('[!@#$?]', '', column_title)
             missing_columns[0].append(line)
             missing_columns[1].append(column + 1)
-            length_1 = len(sheet.cell_value(0, column))
+            import pdb
+            pdb.set_trace()
+            length_1 = len(column_title)
             val = length-length_1
             space = ""
             for index in range(0, val+3):
                 space += " "
-            print("{}{} : FAIL (Should be : {})".format(sheet.cell_value(0, column), space, column_names[column]), file = log_file)
+            print("{}{} : FAIL (Should be : {})".format(column_title, space, column_names[column]), file = log_file)
         else:
-            length_1 = len(sheet.cell_value(0, column))
+            length_1 = len(column_title)
             val = length-length_1
             space = ""
             for index in range(0, val+3):
                 space += " "
-            line = re.sub('[!@#$?]', '', sheet.cell_value(0, column))
+            line = re.sub('[!@#$?]', '', column_title)
             print("{}{} : PASS".format(line, space), file = log_file)
 
 
     # CHECK IF COLUMNS ARE MISPLACED OR SPELLING IS WRONG
     for names in range(0, len(missing_columns[0])):
         for column in range(0, numcols):
-            if missing_columns[0][names] == sheet.cell_value(0, column):
+            column_title = sheet.cell_value(0, column).replace('\n', ' ')
+            if missing_columns[0][names] == column_title:
                 misplaced_columns.append(column + 1)
 
-    if num_of_columns == 18 and flag == 0:
+    if num_of_columns == 15 and flag == 0:
         print("Number of Columns in Tab2       : {} | PASS.\n".format(num_of_columns), file=log_file)
     else:
         print("Number of Columns in Tab2       : {} | FAIL.\n".format(num_of_columns), file=log_file)
@@ -149,30 +155,32 @@ def find_columns_tab3(loc, log_file):
     num_of_columns = 0
     for column in range(0, numcols):
         num_of_columns += 1
-        if column_names[column] not in sheet.cell_value(0, column):
+        column_title = sheet.cell_value(0, column).replace('\n', ' ')
+        if column_names[column] not in column_title:
             flag = 1
             missing_columns[0].append(column_names[column])
             missing_columns[1].append(column + 1)
-            length_1 = len(sheet.cell_value(0, column))
+            length_1 = len(column_title)
             val = length-length_1
             space = ""
             for index in range(0, val+3):
                 space += " "
-            line = re.sub('[!@#$?]', '', sheet.cell_value(0, column))
+            line = re.sub('[!@#$?]', '', column_title)
             print("{}{} : FAIL (Should be {})".format(line, space, column_names[column]), file = log_file)
         else:
-            length_1 = len(sheet.cell_value(0, column))
+            length_1 = len(column_title)
             val = length-length_1
             space = ""
             for index in range(0, val+3):
                 space += " "
-            line = re.sub('[!@#$?]', '', sheet.cell_value(0, column))
+            line = re.sub('[!@#$?]', '', column_title)
             print("{}{} : PASS".format(line, space), file = log_file)
 
     # CHECK IF COLUMNS ARE MISPLACED OR SPELLING IS WRONG
     for names in range(0, len(missing_columns[0])):
         for column in range(0, numcols):
-            if missing_columns[0][names] == sheet.cell_value(0, column):
+            column_title = sheet.cell_value(0, column).replace('\n', ' ')
+            if missing_columns[0][names] == column_title:
                 missing_columns.append(column + 1)
 
     if num_of_columns == 6 and flag == 0:
@@ -229,12 +237,12 @@ def get_current_count(file_loc):
 
     opportunity_count = 0
     for row in range(1, sheet_2.nrows):
-        if str(sheet_2.cell_value(row, 9)) != "":
+        if str(sheet_2.cell_value(row, 0)) != "":
             opportunity_count += 1
 
     win_loss_count = 0
     for row in range(1, sheet_2.nrows):
-        if str(sheet_2.cell_value(row, 15)) != "":
+        if str(sheet_2.cell_value(row, 8)) != "":
             win_loss_count += 1
 
     campaign_count = 0

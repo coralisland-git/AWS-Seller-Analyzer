@@ -35,6 +35,20 @@ def create_copy(src_file, dest_file):
 
     wb2.save(dest_file)
 
+    ################## FOR TAB 3 ##########################
+
+    wb1 = xl.load_workbook(filename=src_file)
+    ws1 = wb1.worksheets[2]
+
+    wb3 = xl.load_workbook(filename=dest_file)
+    ws3 = wb3.create_sheet(ws1.title)
+
+    for row in ws1:
+        for cell in row:
+            ws3[cell.coordinate].value = cell.value
+
+    wb3.save(dest_file)
+
 
 def create_column(data, file_loc, year, month):
     ################## FOR TAB 1 ##########################
@@ -46,20 +60,20 @@ def create_column(data, file_loc, year, month):
 
     # Inserting a column into the worksheet at 2nd position
     ws1.insert_cols(0)
+    ws1.insert_cols(11)
     ws1.insert_cols(12)
     ws1.insert_cols(13)
-    ws1.insert_cols(14)
     ws1.cell(row=1, column=1).value = "Seller UID"
-    ws1.cell(row=1, column=12).value = "Insert Date"
-    ws1.cell(row=1, column=13).value = "Insert Month"
-    ws1.cell(row=1, column=14).value = "Insert Year"
+    ws1.cell(row=1, column=11).value = "Insert Date"
+    ws1.cell(row=1, column=12).value = "Insert Month"
+    ws1.cell(row=1, column=13).value = "Insert Year"
     #
     date = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
     for row in range(2, row_count+1):
         ws1.cell(row, 1).value = data
-        ws1.cell(row, 12).value = month
-        ws1.cell(row, 13).value = year
-        ws1.cell(row, 14).value = date
+        ws1.cell(row, 11).value = month
+        ws1.cell(row, 12).value = year
+        ws1.cell(row, 13).value = date
 
     wb1.save(file_loc)
 
@@ -67,25 +81,24 @@ def create_column(data, file_loc, year, month):
 
     wb2 = xl.load_workbook(filename=file_loc)
     ws2 = wb2.worksheets[2]
-
     row_count = ws2.max_row
 
     # Inserting a column into the worksheet at 2nd position
     ws2.insert_cols(0)
-    ws2.insert_cols(14)
-    ws2.insert_cols(15)
-    ws2.insert_cols(16)
+    ws2.insert_cols(17)
+    ws2.insert_cols(18)
+    ws2.insert_cols(19)
     ws2.cell(row=1, column=1).value = "Seller UID"
-    ws2.cell(row=1, column=14).value = "Insert Date"
-    ws2.cell(row=1, column=15).value = "Insert Month"
-    ws2.cell(row=1, column=16).value = "Insert Year"
+    ws2.cell(row=1, column=17).value = "Insert Date"
+    ws2.cell(row=1, column=18).value = "Insert Month"
+    ws2.cell(row=1, column=19).value = "Insert Year"
     #
     date = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
     for row in range(2, row_count+1):
         ws2.cell(row, 1).value = data
-        ws2.cell(row, 14).value = month
-        ws2.cell(row, 15).value = year
-        ws2.cell(row, 16).value = date
+        ws2.cell(row, 17).value = month
+        ws2.cell(row, 18).value = year
+        ws2.cell(row, 19).value = date
 
     wb2.save(file_loc)
 
@@ -97,19 +110,19 @@ def create_column(data, file_loc, year, month):
 
     # Inserting a column into the worksheet at 2nd position
     ws3.insert_cols(0)
+    ws3.insert_cols(8)
     ws3.insert_cols(9)
     ws3.insert_cols(10)
-    ws3.insert_cols(11)
     ws3.cell(row=1, column=1).value = "Seller UID"
-    ws3.cell(row=1, column=9).value = "Insert Date"
-    ws3.cell(row=1, column=10).value = "Insert Month"
-    ws3.cell(row=1, column=11).value = "Insert Year"
+    ws3.cell(row=1, column=8).value = "Insert Date"
+    ws3.cell(row=1, column=9).value = "Insert Month"
+    ws3.cell(row=1, column=10).value = "Insert Year"
     #
     date = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
     for row in range(2, row_count+1):
         ws3.cell(row, 1).value = data
-        ws3.cell(row, 9).value = month
-        ws3.cell(row, 10).value = year
-        ws3.cell(row, 11).value = date
+        ws3.cell(row, 8).value = month
+        ws3.cell(row, 9).value = year
+        ws3.cell(row, 10).value = date
 
     wb3.save(file_loc)

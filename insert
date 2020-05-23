@@ -21,54 +21,53 @@ from insert_utilities import upload_log
 
 
 
-
 log_file = None
 try:
-    print('Beginning insertion into database from {} and {}'.format(get_tab1_filename(), get_tab2_filename(), get_tab3_filename()))
-    download_log()
-    log_file = open(get_log_s3_key(), 'a')
+	print('Beginning insertion into database from {}, {} and {}'.format(get_tab1_filename(), get_tab2_filename(), get_tab3_filename()))
+	download_log()
+	log_file = open(get_log_s3_key(), 'a')
 
-    download_tab1()
-    download_tab2()
-    download_tab3()
+	download_tab1()
+	download_tab2()
+	download_tab3()
 
-    msg = 'Inserting data into database from {} and {}'.format(get_tab1_filename(), get_tab2_filename(), get_tab3_filename())
-    log_message(msg, log_file)
+	msg = 'Inserting data into database from {}, {} and {}'.format(get_tab1_filename(), get_tab2_filename(), get_tab3_filename())
+	log_message(msg, log_file)
 
-    dbScript.delete_data()
+	dbScript.delete_data()
 
-    msg = 'DataMigration from excel to Staging table'
-    log_message(msg, log_file)
+	msg = 'DataMigration from excel to Staging table'
+	log_message(msg, log_file)
 
-    insert_csv_data_tab1()
-    msg = 'DataMigration to staging table for Tab1 : PASS'
-    log_message(msg, log_file)
+	insert_csv_data_tab1()
+	msg = 'DataMigration to staging table for Tab1 : PASS'
+	log_message(msg, log_file)
 
-    insert_csv_data_tab2()
-    msg = 'DataMigration to staging table for Tab2 : PASS'
-    log_message(msg, log_file)
+	insert_csv_data_tab2()
+	msg = 'DataMigration to staging table for Tab2 : PASS'
+	log_message(msg, log_file)
 
-    insert_csv_data_tab3()
-    msg = 'DataMigration to staging table for Tab3 : PASS'
-    log_message(msg, log_file)
+	insert_csv_data_tab3()
+	msg = 'DataMigration to staging table for Tab3 : PASS'
+	log_message(msg, log_file)
 
-    seller_name = get_tab3_filename().split("_")[1]
-    seller_uid = dbScript.get_seller_id(seller_name)
-    dbScript.verify_master_only_data(get_year_from_sys_args(),
-                                     get_month_as_int(),
-                                     seller_uid,
-                                     seller_name)
+	seller_name = get_tab3_filename().split("_")[1]
+	seller_uid = dbScript.get_seller_id(seller_name)
+	dbScript.verify_master_only_data(get_year_from_sys_args(),
+	                                 get_month_as_int(),
+	                                 seller_uid,
+	                                 seller_name)
 
-    insert_master()
-    msg = 'DataMigration to Master table for Tab1, Tab2 and Tab3 : PASS'
-    log_message(msg, log_file)
-    msg = 'Insertion completed succesfully for files {} and {}.'.format(get_tab1_filename(), get_tab2_filename(), get_tab3_filename())
-    log_message(msg, log_file)
+	insert_master()
+	msg = 'DataMigration to Master table for Tab1, Tab2 and Tab3 : PASS'
+	log_message(msg, log_file)
+	msg = 'Insertion completed succesfully for files {}, {} and {}.'.format(get_tab1_filename(), get_tab2_filename(), get_tab3_filename())
+	log_message(msg, log_file)
 
-    log_file.close()
+	log_file.close()
 
-    # upload the log file to S3
-    upload_log()
+	# upload the log file to S3
+	upload_log()
 
 except Exception as e:
     dbScript.delete_data()
