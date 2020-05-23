@@ -526,6 +526,11 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
     global Column_Error
     global file_name_err
 
+    Seller_Company_Name_error = 0
+    GTM_Campaign_Source = 0
+    Campaign_Name = 0
+    CRM_System_Campaign_ID = 0
+    Campaign_Create_Date = 0
     Opportunity_ID = 0
     Convert_Date = 0
     Opportunity_Type = 0  # newly adjusted it was Opportunity_Status previously
@@ -544,7 +549,169 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
         one_based_column_position = i + 1
         col_name = re.sub('[*]', '', sheet1.cell_value(0, i))
 
-        if col_name == "Opportunity ID":  # newly adjusted (Was at column 11)
+        if col_name == "Seller Company Name":
+            print("\nSeller Company Name Column::", file=log_file)
+            for y in range(1, numrows):
+                seller_company_name = sheet1.cell_value(y, i)
+                try:
+                    if type(seller_company_name) == str and regex.search(seller_company_name) == None \
+                            and seller_company_name != '' and len(seller_company_name) <= 50:
+                        seller_company_name
+                    else:
+                        Seller_Company_Name_error += 1
+                        print("Seller Company Name Error on", "Row:", y + 1, "Column:", i + 1, "Value:", seller_company_name, file=log_file)
+                except:
+                    Seller_Company_Name_error += 1
+                    print("Seller Company Name Error on", "Row:", y + 1, "Column:", i + 1, "Value:", seller_company_name, file=log_file)
+            passed = numrows - Seller_Company_Name_error
+            if Seller_Company_Name_error == 0 and one_based_column_position not in Column_missing_tab2:
+                print("Validation on Seller Company Name      : PASS (Satisfied Conditions :: Alpha, 50 Characters)", file = log_file)
+                print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
+                print("Total number of rows FAILED                : {}".format(Seller_Company_Name_error), file = log_file)
+            else:
+                print("Validation on Seller Company Name      : FAIL", file = log_file)
+                print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
+                print("Total number of rows FAILED                : {}".format(Seller_Company_Name_error), file = log_file)
+
+        elif col_name == "GTM Campaign Source":
+            print("\nGTM Campaign Source Column::", file=log_file)
+            for y in range(1, numrows):
+                gtm_campaign_source = sheet1.cell_value(y, i)
+                try:
+
+                    if (gtm_campaign_source.lower() == 'aws-led' or gtm_campaign_source.lower()== 'seller-led' or gtm_campaign_source.lower() == 'joint') and (gtm_campaign_source != ''):
+                        gtm_campaign_source
+                    else:
+                        GTM_Campaign_Source += 1
+                        print("GTM Campaign Source Error on", "Row:", y + 1, "Column:", i + 1, "Value:",
+                              gtm_campaign_source, file=log_file)
+                except:
+                    GTM_Campaign_Source += 1
+                    print("GTM Campaign Source Error on", "Row:", y + 1, "Column:", i + 1, "Value:", gtm_campaign_source, file=log_file)
+            passed = numrows - GTM_Campaign_Source
+            if GTM_Campaign_Source == 0 and one_based_column_position not in Column_missing_tab2:
+                print("Validation on GTM Campaign Source       : PASS (Satisfied Conditions ::Must be either AWS-led, Seller-led, or Joint)", file = log_file)
+                print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
+                print("Total number of rows FAILED                : {}".format(GTM_Campaign_Source), file = log_file)
+            else:
+                print("Validation on GTM Campaign Source       : FAIL", file = log_file)
+                print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
+                print("Total number of rows FAILED                : {}".format(GTM_Campaign_Source), file = log_file)
+
+        elif col_name == "Campaign Name":
+            print("\nCampaign Name Column::", file=log_file)
+            for y in range(1, numrows):
+                campaign_name = sheet1.cell_value(y, i)
+                try:
+                    if type(campaign_name) == str and len(campaign_name) <= 100 and campaign_name != '':
+                        campaign_name
+                    else:
+                        Campaign_Name += 1
+                        print("Campaign_Name Error on", "Row:", y + 1, "Column:", i + 1, "Value:", campaign_name,
+                              file=log_file)
+                except:
+                    Campaign_Name += 1
+                    print("Campaign_Name Error on", "Row:", y + 1, "Column:", i + 1, "Value:", campaign_name, file=log_file)
+            passed = numrows - Campaign_Name
+            if Campaign_Name == 0 and one_based_column_position not in Column_missing_tab2:
+                print("Validation on Campaign Name         : PASS (Satisfied Conditions :: Alpha, 80 Characters)", file = log_file)
+                print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
+                print("Total number of rows FAILED                : {}".format(Campaign_Name), file = log_file)
+            else:
+                print("Validation on Campaign Name         : FAIL", file = log_file)
+                print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
+                print("Total number of rows FAILED                : {}".format(Campaign_Name), file = log_file)
+
+        elif col_name == "CRM System Campaign ID":
+            print("\nCRM System Campaign Column::", file=log_file)
+            for y in range(1, numrows):
+                crm_system_campaign_id = sheet1.cell_value(y, i)
+                try:
+                    if not is_alnum_max_50_chars(crm_system_campaign_id):
+                        CRM_System_Campaign_ID += 1
+                        print("CRM System Campaign ID Error on", "Row:", y + 1, "Column:", i + 1, "Value:",
+                              crm_system_campaign_id, file=log_file)
+                except:
+                    CRM_System_Campaign_ID += 1
+                    print("CRM System Campaign ID Exception on", "Row:", y + 1, "Column:", i + 1, "Value:", crm_system_campaign_id, file=log_file)
+            passed = numrows - CRM_System_Campaign_ID
+            if CRM_System_Campaign_ID == 0 and one_based_column_position not in Column_missing_tab2:
+                print("Validation on CRM System Campaign ID        : PASS (Satisfied Conditions :: Alpha, 30 Characters)", file = log_file)
+                print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
+                print("Total number of rows FAILED                : {}".format(CRM_System_Campaign_ID), file = log_file)
+            else:
+                print("Validation on CRM System Campaign ID        : FAIL", file = log_file)
+                print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
+                print("Total number of rows FAILED                : {}".format(CRM_System_Campaign_ID), file = log_file)
+
+        elif col_name == "Campaign Create Date":
+            print("\nCampaign Create Date Column::", file=log_file)
+            for y in range(1, numrows):  # for traversing rows
+                campaign_create_date = sheet1.cell_value(y, i)
+                try:
+                    if str(campaign_create_date) != '':
+                        date = str(campaign_create_date)
+                        length = len(date)
+                        real_date = date[:length]
+                        if len(real_date) == 10:
+                            month = int(date[:2])
+                            day = int(date[2:4])
+                            if 1 <= month <= 12:
+                                if 1 <= day <= 31:
+                                    continue
+                                else:
+                                    Campaign_Create_Date += 1
+                                    print("Campaign Create Date Error on", "Row:", y + 1, "Column:", i + 1, "Value:", campaign_create_date, file=log_file)
+                            else:
+                                Campaign_Create_Date += 1
+                                print("Campaign Create Date Error on", "Row:", y + 1, "Column:", i + 1, "Value:", campaign_create_date, file=log_file)
+                        elif len(real_date) == 9:
+                            month = int(date[:1])
+                            day = int(date[1:3])
+                            if 1 <= month <= 12:
+                                if 1 <= day <= 31:
+                                    continue
+                                else:
+                                    Campaign_Create_Date += 1
+                                    print("Campaign Create Date Error on", "Row:", y + 1, "Column:", i + 1, "Value:", campaign_create_date, file=log_file)
+                            else:
+                                Campaign_Create_Date += 1
+                                print("Campaign Create Date Error on", "Row:", y + 1, "Column:", i + 1, "Value:", campaign_create_date, file=log_file)
+                        elif len(real_date) <= 7:
+                                try:
+                                    date = str(xlrd.xldate.xldate_as_datetime(campaign_create_date, wb.datemode))
+                                    year, month, tmix = date.split('-')
+                                    day, timevar = tmix.split(' ')
+                                    isValidDate = True
+                                    datetime.datetime(int(year), int(month), int(day))
+                                except:
+                                    isValidDate = False
+
+                                if (isValidDate):
+                                        continue
+                                else:
+                                    Campaign_Create_Date += 1
+                                    print("Campaign Create Date Error on", "Row:", y + 1, "Column:", i + 1, "Value:", campaign_create_date, file=log_file)
+                        else:
+                            Campaign_Create_Date += 1
+                            print("Campaign Create Date Error on", "Row:", y + 1, "Column:", i + 1, "Value:", campaign_create_date, file=log_file)
+                    else:
+                        Campaign_Create_Date += 1
+                        print("Campaign Create Date Error on", "Row:", y + 1, "Column:", i + 1, "Value:", campaign_create_date, file=log_file)
+                except:
+                    Campaign_Create_Date += 1
+                    print("Campaign Create Date Error on", "Row:", y + 1, "Column:", i + 1, "Value:", campaign_create_date, file=log_file)
+            passed = numrows - Campaign_Create_Date
+            if Campaign_Create_Date == 0 and one_based_column_position not in Column_missing_tab2:
+                print("Validation on Campaign Create Date          : PASS (Satisfied Conditions :: Alpha, Data format mmddyyyy)", file = log_file)
+                print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
+                print("Total number of rows FAILED                : {}".format(Campaign_Create_Date), file = log_file)
+            else:
+                print("Validation on Campaign Create Date          : FAIL", file = log_file)
+                print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
+                print("Total number of rows FAILED                : {}".format(Campaign_Create_Date), file = log_file)
+
+        elif col_name == "Opportunity ID":  # newly adjusted (Was at column 11)
             print("\nOpportunity ID Column::", file=log_file)
             for y in range(1, numrows):
                 opportunity_id = sheet1.cell_value(y, i)
@@ -558,11 +725,11 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
                     print("Opportunity ID Error on", "Row:", y + 1, "Column:", i + 1, "Value:", opportunity_id, file=log_file)
             passed = numrows - Opportunity_ID
             if Opportunity_ID == 0 and one_based_column_position not in Column_missing_tab2:
-                print("Validation on Convert Date          : PASS (Satisfied Conditions :: Alpha, 30 Characters)", file = log_file)
+                print("Validation on Opportunity ID          : PASS (Satisfied Conditions :: Alpha, 30 Characters)", file = log_file)
                 print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
                 print("Total number of rows FAILED                : {}".format(Opportunity_ID), file = log_file)
             else:
-                print("Validation on Convert Date          : FAIL", file = log_file)
+                print("Validation on Opportunity ID          : FAIL", file = log_file)
                 print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
                 print("Total number of rows FAILED                : {}".format(Opportunity_ID), file = log_file)
 

@@ -49,7 +49,7 @@ def find_columns_tab1(loc, log_file):
             if missing_columns[0][names] == column_title:
                 misplaced_columns.append(column + 1)
 
-    if num_of_columns == 18 and flag == 0:
+    if num_of_columns == 9 and flag == 0:
         print("Number of Columns in Tab1       : {} | PASS.\n".format(num_of_columns), file=log_file)
     else:
         print("Number of Columns in Tab1       : {} | FAIL.\n".format(num_of_columns), file=log_file)
