@@ -111,3 +111,53 @@ def validate_lead_country_column(sheet, numrows, col, Column_missing_tab1, one_b
     redshift_connection.close()
 
     return err_cnt_lead_country
+
+
+def validate_opportunity_country_column(sheet, numrows, col, Column_missing_tab2, one_based_column_position, log_file):
+    err_cnt_opportunity_country = 0
+
+    # query for obtaining all the possible names of a opportunity country
+    sql_possible_countries = '''SELECT country_name FROM us_gtmsales.countries
+                                UNION
+                                SELECT country_code FROM us_gtmsales.countries
+                                UNION
+                                SELECT country_code_iso_3a FROM us_gtmsales.countries;'''
+
+    # open one Redshift connection to use for the opportunity country value in each row
+    redshift_connection = get_redshift_connection()
+
+    # query Redshift and get the results in a dataframe
+    df_possible_countries = pd.read_sql(sql_possible_countries,
+                                        con=redshift_connection)
+
+    # store the possible countries in a set for faster lookups
+    set_possible_countries = set(df_possible_countries['country_name'])
+
+    for row in range(1, numrows):
+        lead_country = sheet.cell_value(row, col)
+        err_msg_opportunity_country = 'Opportunity Country column error on Row: {} Column: {} Value: {}'.format(row + 1,
+                                                                                                  col + 1,
+                                                                                                  lead_country)
+        try:
+            if lead_country.upper() not in set_possible_countries:
+                err_cnt_opportunity_country += 1
+                print(err_msg_opportunity_country, file=log_file)
+        except:
+            err_cnt_opportunity_country += 1
+            print(err_msg_opportunity_country, file=log_file)
+
+    passed = numrows - err_cnt_opportunity_country
+    if err_cnt_opportunity_country == 0 and one_based_column_position not in Column_missing_tab2:
+        print('Validation on Opportunity Country           : PASS (Satisfied Conditions :: found opportunity country and corresponding lead region)', file=log_file)
+        print('Total number of rows PASSED                : {}'.format(passed - 1), file=log_file)
+        print('Total number of rows FAILED                : {}'.format(err_cnt_opportunity_country), file=log_file)
+    else:
+        print('Validation on Opportunity Country           : FAIL', file=log_file)
+        print('Total number of rows PASSED                : {}'.format(passed - 1), file=log_file)
+        print('Total number of rows FAILED                : {}'.format(err_cnt_opportunity_country), file=log_file)
+
+    # close the Redshift connection
+    redshift_connection.close()
+
+    return err_cnt_opportunity_country
+
