@@ -33,10 +33,10 @@ def fetch_counts(year, month, seller_uid):
     row = df.fetchall()
     connection.close()
 
-    # if row:
-    #     return row[0][4], row[0][5], row[0][6], row[0][7], row[0][8]
-    # else:
-    return 0, 0, 0, 0, 0
+    if row:
+        return row[0][4], row[0][5], row[0][6], row[0][7], row[0][8]
+    else:
+        return 0, 0, 0, 0, 0
 
 
 def compare_count(box_year, box_month, seller_uid):

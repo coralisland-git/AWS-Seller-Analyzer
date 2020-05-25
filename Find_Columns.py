@@ -237,12 +237,12 @@ def get_current_count(file_loc):
 
     opportunity_count = 0
     for row in range(1, sheet_2.nrows):
-        if str(sheet_2.cell_value(row, 0)) != "":
+        if str(sheet_2.cell_value(row, 5)) != "":
             opportunity_count += 1
 
     win_loss_count = 0
     for row in range(1, sheet_2.nrows):
-        if str(sheet_2.cell_value(row, 8)) != "":
+        if str(sheet_2.cell_value(row, 13)) != "":
             win_loss_count += 1
 
     campaign_count = 0
@@ -252,10 +252,10 @@ def get_current_count(file_loc):
 
     total_investment_count = 0
     for row in range(1, sheet_3.nrows):
-        if sheet_3.cell_value(row, 4) != "":
+        if sheet_3.cell_value(row, 5) != "":
             regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
-            if(regex.search(str(sheet_3.cell_value(row, 4))) == None):
-                total_investment_count += sheet_3.cell_value(row, 4)
+            if(regex.search(str(sheet_3.cell_value(row, 5))) == None):
+                total_investment_count += sheet_3.cell_value(row, 5)
             else:
                 total_investment_count += 0
         else:
