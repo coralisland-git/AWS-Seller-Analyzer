@@ -3,6 +3,8 @@ import dbScript
 import traceback
 from utilities import get_year_from_sys_args
 from utilities import get_month_as_int
+import Find_Columns
+from validate_utilities import get_src_file_path
 
 from insert_utilities import download_log
 from insert_utilities import download_tab1
@@ -63,6 +65,14 @@ try:
 	log_message(msg, log_file)
 	msg = 'Insertion completed succesfully for files {}, {} and {}.'.format(get_tab1_filename(), get_tab2_filename(), get_tab3_filename())
 	log_message(msg, log_file)
+
+
+	curr_lead, curr_opportunity, curr_win_loss, curr_campaign, curr_tot_investment = Find_Columns.get_current_count(get_src_file_path())
+	print("\nTotal Leads                  : ", curr_lead, file=log_file)
+	print("Total Opportunities          : ", curr_opportunity, file=log_file)
+	print("Total Pipelines              : ", curr_win_loss, file=log_file)
+	print("Total Campaigns              : ", curr_campaign, file=log_file)
+	print("Total Investment             : ", curr_tot_investment, file=log_file)
 
 	log_file.close()
 

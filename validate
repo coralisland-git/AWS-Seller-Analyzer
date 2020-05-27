@@ -778,7 +778,7 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
 
         elif col_name == 'Opportunity Country':
             print('\nOpportunity Country Column::', file=log_file)
-            err_cnt_opportunity_country = validate_opportunity_country_column(sheet, numrows, i, Column_missing_tab2, one_based_column_position, log_file)
+            err_cnt_opportunity_country = validate_opportunity_country_column(sheet1, numrows, i, Column_missing_tab2, one_based_column_position, log_file)
 
         elif col_name == "Opportunity Status":  # newly added Opportunity Status
             print("\nOpportunity Status Column::", file=log_file)
@@ -1293,17 +1293,9 @@ def Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, shee
     
     final_R2Count = [CampName_CRMId_err, lead_camp_Err, oppor_id_Err, valid_opp_Err, Win_Match, flag, Duplicampaign, Duplicampaign_1, Duplicampaign_2, Duplicampaign_3]
 
-    print("\n################################################################", file=log_file)
+    print("\n################################################################", file=log_file)    
 
-    totalValues = {
-        'leads': curr_lead,
-        'opportunities': curr_opportunity,
-        'pipelines': curr_win_loss,
-        'campaigns': curr_campaign,
-        'Investment': curr_tot_investment,
-    }
-
-    count_error(get_src_filename(), ERRTab1List, ERRTab2List, ERRTab3List, final_R2Count, log_file, reqparam, totalValues)
+    count_error(get_src_filename(), ERRTab1List, ERRTab2List, ERRTab3List, final_R2Count, log_file, reqparam)
 
 
 # --------- TAB 2 VALIDATIONS ---------
@@ -1528,13 +1520,14 @@ def tab3reader(ERRTab1List, ERRTab2List, log_file, df, sheet, sheet1, xlsx):
                 print("Total number of rows FAILED       : {}".format(Investment_error_tab3), file = log_file)
 
     ERRTab3List = [Seller_Company_Name_error_tab3, GTM_Campaign_Source_tab3, Campaign_Name_tab3,
-                   CRM_System_Campaign_ID_tab3, Campaign_Create_Date_tab3, Investment_error_tab3]
+                   CRM_System_Campaign_ID_tab3, Campaign_Create_Date_tab3, Investment_error_tab3]    
+
     print("\n################################################################", file=log_file)
     Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, sheet1, xlsx)
 
 
 # --------- COUNT OF TOTAL ERRORS ---------
-def count_error(filename, errlisttypo, errlistTab2, errlistTab3, errlistr2, log_file,reqparam, totalValues):
+def count_error(filename, errlisttypo, errlistTab2, errlistTab3, errlistr2, log_file,reqparam):
     if sum(errlisttypo + errlistr2 + errlistTab2 + errlistTab3) != 0:
         print("\n+++++Tab1 Error+++++", file=log_file)
         print("\nSeller Company Name Error         : ", errlisttypo[0], file=log_file)
@@ -1548,11 +1541,11 @@ def count_error(filename, errlisttypo, errlistTab2, errlistTab3, errlistr2, log_
         print("Lead Status Error                 : ", errlisttypo[8], file=log_file)
 
         print("\n+++++Tab2 Error+++++", file=log_file)
-        print("\nSeller Company Name Error         : ", errlisttypo[0], file=log_file)
-        print("GTM Campaign Source Error         : ", errlisttypo[1], file=log_file)
-        print("Campaign Name Error               : ", errlisttypo[2], file=log_file)
-        print("CRM System Campaign ID Error      : ", errlisttypo[3], file=log_file)
-        print("Campaign Create Date Error        : ", errlisttypo[4], file=log_file)
+        print("\nSeller Company Name Error         : ", errlistTab2[0], file=log_file)
+        print("GTM Campaign Source Error         : ", errlistTab2[1], file=log_file)
+        print("Campaign Name Error               : ", errlistTab2[2], file=log_file)
+        print("CRM System Campaign ID Error      : ", errlistTab2[3], file=log_file)
+        print("Campaign Create Date Error        : ", errlistTab2[4], file=log_file)
         print("Opportunity ID Error              : ", errlistTab2[5], file=log_file)
         print("Convert Date Error                : ", errlistTab2[6], file=log_file)
         print("Opportunity Country Error         : ", errlistTab2[7], file=log_file)
@@ -1593,12 +1586,6 @@ def count_error(filename, errlisttypo, errlistTab2, errlistTab3, errlistr2, log_
     elif totalcount == 0:
         fileaccepted(reqparam, log_file)
 
-    print("Total Leads                  : ", totalValues['leads'], file=log_file)
-    print("Total Opportunities          : ", totalValues['opportunities'], file=log_file)
-    print("Total Pipelines              : ", totalValues['pipelines'], file=log_file)
-    print("Total Campaigns              : ", totalValues['campaigns'], file=log_file)
-    print("Total Investment             : ", totalValues['Investment'], file=log_file)    
-
     close_and_upload_log(log_file)
 
 
@@ -1617,10 +1604,18 @@ def filerejected():
                               get_src_filename(),
                               "Fail")
     print("File:",get_src_file_path(),"is Rejected! Please check Logs in Log Files for more information.")
+    fail_loc = '{}/{}/Rejected Files/{}__REJECTED.{}'.format(
+        get_year_from_sys_args(),
+        get_month_from_sys_args(),
+        get_src_filename(),
+        get_ext_from_src_filename()
+    )
+    shutil.copy(get_src_file_path(), fail_loc)
 
-    shutil.copy(get_src_file_path(), str(get_year_from_sys_args()) + '/' + str(
-        get_month_from_sys_args()) + "/Rejected Files/%s__REJECTED.%s" % (get_src_filename(),
-                                                                          get_ext_from_src_filename()))
+    # upload fail.xlsx
+    get_s3_client().upload_file(fail_loc,
+                                get_s3_bucket(),
+                                fail_loc)
 
 
 def fileaccepted(reqparam, log_file):
@@ -1639,6 +1634,11 @@ def fileaccepted(reqparam, log_file):
         get_ext_from_src_filename()
     )
     shutil.copy(get_src_file_path(), success_loc)
+
+    # upload success.xlsx
+    get_s3_client().upload_file(success_loc,
+                                get_s3_bucket(),
+                                success_loc)
 
     # GET COPIED FILE LOCATION BY CREATING COPY
     seller_uid = dbScript.get_seller_id(get_seller_name())
