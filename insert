@@ -66,7 +66,7 @@ try:
 	msg = 'Insertion completed succesfully for files {}, {} and {}.'.format(get_tab1_filename(), get_tab2_filename(), get_tab3_filename())
 	log_message(msg, log_file)
 
-	print("\n################################################################", file=log_file)
+	print("\n\n################################################################", file=log_file)
 
 	curr_lead, curr_opportunity, curr_win_loss, curr_campaign, curr_tot_investment = Find_Columns.get_current_count(get_src_file_path())
 	print("\nTotal Leads                  : ", curr_lead, file=log_file)
