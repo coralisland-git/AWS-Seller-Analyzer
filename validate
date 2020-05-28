@@ -953,7 +953,7 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
         elif col_name == "Billed Revenue":
             print("\nBilled Revenue Column::", file=log_file)
             minus_values = 0
-            single_values = 0
+            single_values = []
             for y in range(1, numrows):  # for traversing rows
                 billed_revenue = sheet1.cell_value(y, i)
                 try:
@@ -962,7 +962,7 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
                         datastr = str(data)
                         if (type(data) == int) and int(data) > 0 or (str(billed_revenue) == '') and (len(datastr) <= 11):
                             if len(str(data)) == 1:
-                                single_values += 1
+                                single_values.append(str(y+1))
                         else:
                             Billed_Revenue += 1
                             print("Billed Revenue Error on", "Row:", y + 1, "Column:", i + 1, "Value:", billed_revenue,
@@ -978,10 +978,9 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
                 print("Validation on Billed Revenue               : PASS (Satisfied Conditions :: Alpha, 11 Characters)", file = log_file)
             else:
                 print("Validation on Billed Revenue               : FAIL", file = log_file)
-            log_string = "Total number of rows PASSED                : {}".format(passed - 1)            
-            if single_values != 0:
-                log_string += " ({} single digit values)".format(single_values)
-            print(log_string, file = log_file)
+            print("Total number of rows PASSED                : {}".format(passed - 1), file = log_file)
+            if len(single_values) != 0:
+                print("Total number of rows FLAGGED               : {} (Row {})".format(len(single_values), ', '.join(single_values)), file = log_file)
             print("Total number of rows FAILED                : {}".format(Billed_Revenue), file = log_file)
 
     ERRTab2List = [Seller_Company_Name_error, GTM_Campaign_Source, Campaign_Name, CRM_System_Campaign_ID,
