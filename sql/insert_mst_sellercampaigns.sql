@@ -1,4 +1,4 @@
-insert into us_gtmsales.mst_SellerCampaigns
+insert into us_gtmsales.mst_sellercampaigns_v1
 (
   selleruid,
   sellercompanyname,
@@ -12,15 +12,15 @@ insert into us_gtmsales.mst_SellerCampaigns
   insertiondate
 )
 select
-selleruid,
-sellercompanyname,
-gtmcampaignsource,
-campaignname,
-crmsystemcampaignid,
-left(regexp_replace(campaigncreatedate, '\-|\\/|\:|\\.'), 8) campaigncreatedate,
-investment,
-boxmonth,
-boxyear,
-getdate()
+  selleruid,
+  sellercompanyname,
+  gtmcampaignsource,
+  campaignname,
+  crmsystemcampaignid,
+  left(regexp_replace(campaigncreatedate, '\-|\\/|\:|\\.'), 8) campaigncreatedate,
+  investment,
+  boxmonth,
+  boxyear,
+  getdate()
 from
-us_gtmsales.stg_sellercampaigns;
+us_gtmsales.stg_sellercampaigns_v1;
