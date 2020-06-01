@@ -1,0 +1,375 @@
+*****Validation Report for File SellerGTMReport_CrowdStrike_05222020Test.xlsx 19:02:11*****
+
+
+Validations Part 1 :: File name and Excel structure
+----------------------------------------------------------------
+1. File Name and Excel structure Validation
+
+a. File Name Validation
+Filename              : SellerGTMReport_CrowdStrike_05222020Test.xlsx
+SellerName            : CrowdStrike
+start with 		     : SellerGTMReport PASS
+Filename Upload Date 	     :05222020Test FAIL
+File Name Extension 	     : xlsx PASS 
+
+Total number of rows in tab1 : 25
+Total number of rows in tab2 : 21
+Total number of rows in tab3 : 16
+Data Start at A2 	     : PASS
+
+b. Excel Structure Validation
+#Excel Structure, Tab 1
+Seller Company Name*           : PASS
+GTM Campaign Source*           : PASS
+Campaign Name*                 : PASS
+CRM System Campaign ID*        : PASS
+Campaign Create Date*          : PASS
+Lead ID*                       : PASS
+Create Date*                   : PASS
+Lead Country*                  : PASS
+Lead Status*                   : PASS
+Number of Columns in Tab1       : 9 | PASS.
+
+
+#Excel Structure, Tab 2
+Seller Company Name*           : PASS
+GTM Campaign Source*           : PASS
+Campaign Name*                 : PASS
+CRM System Campaign ID*        : PASS
+Campaign Create Date*          : PASS
+Opportunity ID*                : PASS
+Convert Date*                  : PASS
+Opportunity Country*           : PASS
+Opportunity Status*            : PASS
+AWS Marketplace Opportunity*   : PASS
+Pipeline Revenue*              : PASS
+Account Name                   : PASS
+Account ID                     : PASS
+Win Date                       : PASS
+Billed Revenue                 : PASS
+Number of Columns in Tab2       : 15 | PASS.
+
+
+#Excel Structure, Tab 3
+Seller Company Name*         : PASS
+GTM Campaign Source*         : PASS
+Campaign Name*               : PASS
+CRM System Campaign ID*      : PASS
+Campaign Create Date*        : PASS
+Investment*                  : PASS
+Number of Columns in Tab3    : 6 PASS
+
+
+
+
+2. Seller Company Name Validation (Checks the existance of sellername from the File name in the Database table : mst_SellerParticipants)
+Seller Name from table  - mst_SellerParticipants : CrowdStrike PASS (Seller Company Name exists.)
+Seller UID from table   - mst_SellerParticipants : 9 PASS
+
+########################################################
+
+Validations Part 2 and Part 3 for data validation :: Column Validations Tab 1
+----------------------------------------------------------------
+
+3. Column Validations for Tab 1 for incorrect size and incorrect data
+
+Seller Company Name Column::
+Validation on Seller Company Name 	  : PASS (Satisfied Conditions :: Alpha, 50 Characters)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+GTM Campaign Source Column::
+Validation on GTM Campaign Source 	   : PASS (Satisfied Conditions ::Must be either AWS-led, Seller-led, or Joint)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Campaign Name Column::
+Validation on Campaign Name 		   : PASS (Satisfied Conditions :: Alpha, 80 Characters)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+CRM System Campaign Column::
+Validation on CRM System Campaign ID 	   : PASS (Satisfied Conditions :: Alpha, 30 Characters)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Campaign Create Date Column::
+Validation on Campaign Create Date 		   : PASS (Satisfied Conditions :: Alpha, Data format mmddyyyy)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Lead ID Column::
+Validation on Lead ID 			   : PASS (Satisfied Conditions :: Alpha, 30 Characters)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Create Date Column::
+Validation on Create Date 		   : PASS (Satisfied Conditions :: Alpha, Data format mmddyyyy)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Lead Country Column::
+Validation on Lead Country 		   : PASS (Satisfied Conditions :: found lead country and corresponding lead region)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Lead Status Column::
+Validation on Lead Status 		   : PASS (Satisfied Conditions :: Must be either Valid, Closed, Lost, or Junk)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Validations Part 2 and Part 3 for data validation :: Column Validations Tab 2
+----------------------------------------------------------------
+
+3. Column Validations for Tab 2 for incorrect size and incorrect data
+
+Seller Company Name Column::
+Validation on Seller Company Name      : PASS (Satisfied Conditions :: Alpha, 50 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+GTM Campaign Source Column::
+Validation on GTM Campaign Source       : PASS (Satisfied Conditions ::Must be either AWS-led, Seller-led, or Joint)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Campaign Name Column::
+Validation on Campaign Name         : PASS (Satisfied Conditions :: Alpha, 80 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+CRM System Campaign Column::
+Validation on CRM System Campaign ID        : PASS (Satisfied Conditions :: Alpha, 30 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Campaign Create Date Column::
+Validation on Campaign Create Date          : PASS (Satisfied Conditions :: Alpha, Data format mmddyyyy)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Opportunity ID Column::
+Validation on Opportunity ID          : PASS (Satisfied Conditions :: Alpha, 30 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Convert Date Column::
+Validation on Convert Date         : PASS (Satisfied Conditions :: Data format mmddyyyy)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Opportunity Country Column::
+Validation on Opportunity Country           : PASS (Satisfied Conditions :: found opportunity country and corresponding lead region)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Opportunity Status Column::
+Validation on Opportunity Status        : PASS (Satisfied Conditions :: Must be either Valid, Closed, Lost, or Junk)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+AWS Marketplace Opportunity Column::
+Validation on AWS Marketplace Opportunity : PASS (Satisfied Conditions :: Must be either Yes, No, or Not Reportable)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Pipeline Revenue Column::
+Pipeline Revenue Error on Row: 9 Column: 11 Value: -999.0
+Pipeline Revenue Error on Row: 18 Column: 11 Value: -999.0
+Pipeline Revenue Error on Row: 19 Column: 11 Value: -888.0
+Pipeline Revenue Error on Row: 20 Column: 11 Value: -99.0
+Pipeline Revenue Error on Row: 22 Column: 11 Value: -653.0
+Validation on Pipeline Revenue             : FAIL
+Total number of rows PASSED                : 16
+Total number of rows FAILED                : 5
+
+Account Name Column::
+Validation on Account Name      : PASS (Satisfied Conditions :: Alpha, 50 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Account ID Column::
+Validation on Account ID             : PASS (Satisfied Conditions :: Alpha, 11 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Win Date Column::
+Validation on Win Date                    : PASS (Satisfied Conditions :: Data format mmddyyyy)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Billed Revenue Column::
+Billed Revenue Error on Row: 8 Column: 15 Value: -562.0
+Billed Revenue Error on Row: 15 Column: 15 Value: -652.0
+Validation on Billed Revenue               : FAIL
+Total number of rows PASSED                : 19
+Total number of rows FLAGGED               : 4 (Row 7, 9, 13, 16)
+Total number of rows FAILED                : 2
+
+4. Column Validations for Tab 3
+Seller Company Name Column::
+Seller Company Name Validation    : PASS (Satisfied Conditions ::  Alpha, 50 Characters)
+Total number of rows PASSED       : 16
+Total number of rows FAILED       : 0
+
+GTM Campaign Source Column::
+GTM Campaign Source Validation    : PASS (Satisfied Conditions ::  Must be either AWS-led, Seller-led, or Joint)
+Total number of rows PASSED       : 16
+Total number of rows FAILED       : 0
+
+Campaign Name Column::
+Campaign Name Validation    : PASS (Satisfied Conditions ::  Alpha, 80 Characters)
+Total number of rows PASSED       : 16
+Total number of rows FAILED       : 0
+
+CRM System Campaign ID Column::
+CRM System Campaign ID Validation : PASS (Satisfied Conditions ::  Alpha, 30 Characters)
+Total number of rows PASSED       : 16
+Total number of rows FAILED       : 0
+
+Campaign Create Date Column::
+Validation on Campaign Create Date          : PASS (Satisfied Conditions :: Alpha, Data format mmddyyyy)
+Total number of rows PASSED                : 16
+Total number of rows FAILED                : 0
+
+Investment Column::
+Investment Error Validation       : PASS (Satisfied Conditions ::  Alpha, 11 Characters)
+Total number of rows PASSED       : 16
+Total number of rows FAILED       : 0
+
+################################################################
+
+Validations Part 3 :: Additional validations
+----------------------------------------------------------------
+
+6. Validate Conditionally Required Fields :: 2 scenarios
+Validate conditional opportunity fields
+Conditional Opportunity fields : PASS
+TOTAL ROWS PASS                : 21
+TOTAL ROWS FAIL                : 0
+
+Validate conditional win date fields
+Conditional win date fields : PASS
+TOTAL ROWS PASS             : 21
+TOTAL ROWS FAIL             : 0
+
+8. Validate unique Campaign Name and Campaign ID pairs
+Campaign names and Campaign IDs match within tab 1
+Unique opportunities within a campaign : PASS
+TOTAL ROWS PASS                        : 25
+TOTAL ROWS FAIL                        : 0
+
+Compare Tab 1 and Tab 2 to ensure that Campaign Name and Campaign ID pairs match
+Validate number of campaign name and campaign ID pairs in Tab 1 : PASS
+Validate number of campaign name and campaign ID pairs in Tab 2 : PASS
+Validate number of campaign name and campaign ID pairs in Tab 3 : PASS
+Validate number of campaign name and campaign ID pairs in Tab 2 are consistent : FAIL
+Tab1 List :
+['eBook Top 10 AWS Cloud Security Risks', '7010g000001Lz0zAAC']
+['Think Before You Cloud Webinar: Get CloudFit: 12 AWS Best Practices for Cloud', '7010g0000019kjuAAA']
+['FY18 hot leads - AWS Free Trial request', '7010g000001M5YCAA0']
+["Executive's eGuide to Protecting Workloads and Data on AWS", '7010g0000019mCeAAI']
+['FY19-Q4-Event-AWS Presidio Cloud Seminar-Columbus-09May19', '7010g000001ItxGAAS']
+['FY19Q3 AWS Summit Sydney-30Apr19', '7010g000001MIVrAAO']
+['FY19-Q3-Event--AWS Berlin - Feb 26-27-Berlin-26Feb19', '7010g000001MKfIAAW']
+['FY19-Q4-AWS Summit --Chicago - 5/30/2019-Chicago-30May19', '7010g000001IxBEAA0']
+['FY19Q2-Whitepaper-AWS MP-Protecting Developer Environments ITCorp', '7010g000001MH8rAAG']
+['FY19-Q4-Event--AWS Summit Tokyo 2019-Cloud-Tokyo-12Jun19', '7010g0000019lOvAAI']
+['FY19Q4 - UTD - Event-Presidio Inc. -Q3 FL AWS UTD Series-Jacksonville 14May19', '7010g000001IweTAAS']
+['FY19Q3  Amazon AWS Summit ATL 2MAY2019', '7010g000001MKUZAA4']
+['FY19Q3 - UTD - APAC Virtual UTD AWS 25th Mar 2019 [VUTD][VUTD]', '7010g000001MI9bAAG']
+['FY19Q4 - AWS re:Inforce - Boston - 25June2019', '7010g000001IwSmAAK']
+['FY20Q2-AWS re:Invent-Breakout Session-191205', '7010g000001JC5pAAG']
+['FY19Q4 - AWS re:Inforce - CI/CD Session', '7010g000001J1YqAAK']
+Tab2 List :
+['eBook Top 10 AWS Cloud Security Risks', '7010g000001Lz0zAAC']
+['Think Before You Cloud Webinar: Get CloudFit: 12 AWS Best Practices for Cloud', '7010g0000019kjuAAA']
+['FY18 hot leads - AWS Free Trial request', '7010g000001M5YCAA0']
+["Executive's eGuide to Protecting Workloads and Data on AWS", '7010g0000019mCeAAI']
+['FY19-Q4-Event-AWS Presidio Cloud Seminar-Columbus-09May19', '7010g000001ItxGAAS']
+['FY19Q3 AWS Summit Sydney-30Apr19', '7010g000001MIVrAAO']
+['FY19-Q3-Event--AWS Berlin - Feb 26-27-Berlin-26Feb19', '7010g000001MKfIAAW']
+['FY19-Q4-AWS Summit --Chicago - 5/30/2019-Chicago-30May19', '7010g000001IxBEAA0']
+['FY19Q2-Whitepaper-AWS MP-Protecting Developer Environments ITCorp', '7010g000001MH8rAAG']
+['FY19-Q4-Event--AWS Summit Tokyo 2019-Cloud-Tokyo-12Jun19', '7010g0000019lOvAAI']
+['FY19Q4 - UTD - Event-Presidio Inc. -Q3 FL AWS UTD Series-Jacksonville 14May19', '7010g000001IweTAAS']
+['FY19Q3  Amazon AWS Summit ATL 2MAY2019', '7010g000001MKUZAA4']
+['FY19Q3 - UTD - APAC Virtual UTD AWS 25th Mar 2019 [VUTD][VUTD]', '7010g000001MI9bAAG']
+['FY19Q4 - AWS re:Inforce - Boston - 25June2019', '7010g000001IwSmAAK']
+['FY20Q2-AWS re:Invent-Breakout Session-191205', '7010g000001JC5pAAG']
+
+Tab3 List :
+['eBook Top 10 AWS Cloud Security Risks', '7010g000001Lz0zAAC']
+['Think Before You Cloud Webinar: Get CloudFit: 12 AWS Best Practices for Cloud', '7010g0000019kjuAAA']
+['FY18 hot leads - AWS Free Trial request', '7010g000001M5YCAA0']
+["Executive's eGuide to Protecting Workloads and Data on AWS", '7010g0000019mCeAAI']
+['FY19-Q4-Event-AWS Presidio Cloud Seminar-Columbus-09May19', '7010g000001ItxGAAS']
+['FY19Q3 AWS Summit Sydney-30Apr19', '7010g000001MIVrAAO']
+['FY19-Q3-Event--AWS Berlin - Feb 26-27-Berlin-26Feb19', '7010g000001MKfIAAW']
+['FY19-Q4-AWS Summit --Chicago - 5/30/2019-Chicago-30May19', '7010g000001IxBEAA0']
+['FY19Q2-Whitepaper-AWS MP-Protecting Developer Environments ITCorp', '7010g000001MH8rAAG']
+['FY19-Q4-Event--AWS Summit Tokyo 2019-Cloud-Tokyo-12Jun19', '7010g0000019lOvAAI']
+['FY19Q4 - UTD - Event-Presidio Inc. -Q3 FL AWS UTD Series-Jacksonville 14May19', '7010g000001IweTAAS']
+['FY19Q3  Amazon AWS Summit ATL 2MAY2019', '7010g000001MKUZAA4']
+['FY19Q3 - UTD - APAC Virtual UTD AWS 25th Mar 2019 [VUTD][VUTD]', '7010g000001MI9bAAG']
+['FY19Q4 - AWS re:Inforce - Boston - 25June2019', '7010g000001IwSmAAK']
+['FY20Q2-AWS re:Invent-Breakout Session-191205', '7010g000001JC5pAAG']
+['FY19Q4 - AWS re:Inforce - CI/CD Session', '7010g000001J1YqAAK']
+
+##################################################################
+
+Validations Part 4 :: Validation with Counter Table
+--------------------------------------------------------------------
+
+10. Previous Vs Current Counts/Totals
+Previous Lead Count          : 0  |   Current Lead Count        : 25  |   PASS
+Previous Opportunity Count   : 0  |   Current Opportunity Count : 21  |   PASS
+Previous Win Date Count      : 0  |   Current Win Date Count    : 21  |   PASS
+Previous Campaign Count      : 0  |   Current Campaign Count    : 16  |   PASS
+Previous Total Investment    : 0  |   Current Total Investment  : 772500.0  |   PASS
+
+################################################################
+
++++++Tab1 Error+++++
+
+Seller Company Name Error         :  0
+GTM Campaign Source Error         :  0
+Campaign Name Error               :  0
+CRM System Campaign ID Error      :  0
+Campaign Create Date Error        :  0
+Lead ID Error                     :  0
+Create Date Error                 :  0
+Lead Country Error                :  0
+Lead Status Error                 :  0
+
++++++Tab2 Error+++++
+
+Seller Company Name Error         :  0
+GTM Campaign Source Error         :  0
+Campaign Name Error               :  0
+CRM System Campaign ID Error      :  0
+Campaign Create Date Error        :  0
+Opportunity ID Error              :  0
+Convert Date Error                :  0
+Opportunity Country Error         :  0
+Opportunity Status Error          :  0
+AWS Marketplace Opportunity Error :  0
+Pipeline Revenue Error            :  5
+Account Name                      :  0
+Account ID                        :  0
+Win Date Error                    :  0
+Billed Revenue Error              :  2
+
++++++Tab3 Errors+++++
+Seller Company Name_error    :  0
+GTM Campaign Source Error    :  0
+Campaign Name Error          :  0
+CRM System Campaign ID Error :  0
+Campaign Create Date Error   :  0
+Investment Error             :  0
+
+Total Errors in Tab1, Tab2 and Tab3  :  9
+
+SellerGTMReport_CrowdStrike_05222020Test.xlsx has not been validated and saved to _Rejected and renamed SellerGTMReport_CrowdStrike_05222020Test.xlsx_REJECTED.xls. FAIL
+
+************************************END OF FILE************************************

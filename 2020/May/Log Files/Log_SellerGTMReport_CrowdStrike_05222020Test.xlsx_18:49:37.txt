@@ -1,0 +1,216 @@
+*****Validation Report for File SellerGTMReport_CrowdStrike_05222020Test.xlsx 18:49:37*****
+
+
+Validations Part 1 :: File name and Excel structure
+----------------------------------------------------------------
+1. File Name and Excel structure Validation
+
+a. File Name Validation
+Filename              : SellerGTMReport_CrowdStrike_05222020Test.xlsx
+SellerName            : CrowdStrike
+start with 		     : SellerGTMReport PASS
+Filename Upload Date 	     :05222020Test FAIL
+File Name Extension 	     : xlsx PASS 
+
+Total number of rows in tab1 : 25
+Total number of rows in tab2 : 21
+Total number of rows in tab3 : 16
+Data Start at A2 	     : PASS
+
+b. Excel Structure Validation
+#Excel Structure, Tab 1
+Seller Company Name*           : PASS
+GTM Campaign Source*           : PASS
+Campaign Name*                 : PASS
+CRM System Campaign ID*        : PASS
+Campaign Create Date*          : PASS
+Lead ID*                       : PASS
+Create Date*                   : PASS
+Lead Country*                  : PASS
+Lead Status*                   : PASS
+Number of Columns in Tab1       : 9 | PASS.
+
+
+#Excel Structure, Tab 2
+Seller Company Name*           : PASS
+GTM Campaign Source*           : PASS
+Campaign Name*                 : PASS
+CRM System Campaign ID*        : PASS
+Campaign Create Date*          : PASS
+Opportunity ID*                : PASS
+Convert Date*                  : PASS
+Opportunity Country*           : PASS
+Opportunity Status*            : PASS
+AWS Marketplace Opportunity*   : PASS
+Pipeline Revenue*              : PASS
+Account Name                   : PASS
+Account ID                     : PASS
+Win Date                       : PASS
+Billed Revenue                 : PASS
+Number of Columns in Tab2       : 15 | PASS.
+
+
+#Excel Structure, Tab 3
+Seller Company Name*         : PASS
+GTM Campaign Source*         : PASS
+Campaign Name*               : PASS
+CRM System Campaign ID*      : PASS
+Campaign Create Date*        : PASS
+Investment*                  : PASS
+Number of Columns in Tab3    : 6 PASS
+
+
+
+
+2. Seller Company Name Validation (Checks the existance of sellername from the File name in the Database table : mst_SellerParticipants)
+Seller Name from table  - mst_SellerParticipants : CrowdStrike PASS (Seller Company Name exists.)
+Seller UID from table   - mst_SellerParticipants : 9 PASS
+
+########################################################
+
+Validations Part 2 and Part 3 for data validation :: Column Validations Tab 1
+----------------------------------------------------------------
+
+3. Column Validations for Tab 1 for incorrect size and incorrect data
+
+Seller Company Name Column::
+Validation on Seller Company Name 	  : PASS (Satisfied Conditions :: Alpha, 50 Characters)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+GTM Campaign Source Column::
+Validation on GTM Campaign Source 	   : PASS (Satisfied Conditions ::Must be either AWS-led, Seller-led, or Joint)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Campaign Name Column::
+Validation on Campaign Name 		   : PASS (Satisfied Conditions :: Alpha, 80 Characters)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+CRM System Campaign Column::
+Validation on CRM System Campaign ID 	   : PASS (Satisfied Conditions :: Alpha, 30 Characters)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Campaign Create Date Column::
+Validation on Campaign Create Date 		   : PASS (Satisfied Conditions :: Alpha, Data format mmddyyyy)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Lead ID Column::
+Validation on Lead ID 			   : PASS (Satisfied Conditions :: Alpha, 30 Characters)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Create Date Column::
+Validation on Create Date 		   : PASS (Satisfied Conditions :: Alpha, Data format mmddyyyy)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Lead Country Column::
+Validation on Lead Country 		   : PASS (Satisfied Conditions :: found lead country and corresponding lead region)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Lead Status Column::
+Validation on Lead Status 		   : PASS (Satisfied Conditions :: Must be either Valid, Closed, Lost, or Junk)
+Total number of rows PASSED                : 25
+Total number of rows FAILED                : 0
+
+Validations Part 2 and Part 3 for data validation :: Column Validations Tab 2
+----------------------------------------------------------------
+
+3. Column Validations for Tab 2 for incorrect size and incorrect data
+
+Seller Company Name Column::
+Validation on Seller Company Name      : PASS (Satisfied Conditions :: Alpha, 50 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+GTM Campaign Source Column::
+Validation on GTM Campaign Source       : PASS (Satisfied Conditions ::Must be either AWS-led, Seller-led, or Joint)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Campaign Name Column::
+Validation on Campaign Name         : PASS (Satisfied Conditions :: Alpha, 80 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+CRM System Campaign Column::
+Validation on CRM System Campaign ID        : PASS (Satisfied Conditions :: Alpha, 30 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Campaign Create Date Column::
+Validation on Campaign Create Date          : PASS (Satisfied Conditions :: Alpha, Data format mmddyyyy)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Opportunity ID Column::
+Validation on Opportunity ID          : PASS (Satisfied Conditions :: Alpha, 30 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Convert Date Column::
+Validation on Convert Date         : PASS (Satisfied Conditions :: Data format mmddyyyy)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Opportunity Country Column::
+Validation on Opportunity Country           : PASS (Satisfied Conditions :: found opportunity country and corresponding lead region)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Opportunity Status Column::
+Validation on Opportunity Status        : PASS (Satisfied Conditions :: Must be either Valid, Closed, Lost, or Junk)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+AWS Marketplace Opportunity Column::
+Validation on AWS Marketplace Opportunity : PASS (Satisfied Conditions :: Must be either Yes, No, or Not Reportable)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Pipeline Revenue Column::
+Pipeline Revenue Error on Row: 9 Column: 11 Value: -999.0
+Pipeline Revenue Error on Row: 18 Column: 11 Value: -999.0
+Pipeline Revenue Error on Row: 19 Column: 11 Value: -888.0
+Pipeline Revenue Error on Row: 20 Column: 11 Value: -99.0
+Pipeline Revenue Error on Row: 22 Column: 11 Value: -653.0
+Validation on Pipeline Revenue             : FAIL
+Total number of rows PASSED                : 16
+Total number of rows FAILED                : 5
+
+Account Name Column::
+Validation on Account Name      : PASS (Satisfied Conditions :: Alpha, 50 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Account ID Column::
+Validation on Account ID             : PASS (Satisfied Conditions :: Alpha, 11 Characters)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Win Date Column::
+Validation on Win Date                    : PASS (Satisfied Conditions :: Data format mmddyyyy)
+Total number of rows PASSED                : 21
+Total number of rows FAILED                : 0
+
+Billed Revenue Column::
+Billed Revenue Error on Row: 8 Column: 15 Value: -562.0
+Billed Revenue Error on Row: 15 Column: 15 Value: -652.0
+Validation on Billed Revenue               : FAIL
+Total number of rows PASSED                : 19
+!!! ERROR RUNNING VALIDATION: AN EXCEPTION WAS RAISED:
+Traceback (most recent call last):
+  File "validate", line 1770, in <module>
+    filenmcheck(log_file)
+  File "validate", line 165, in filenmcheck
+    tab1reader(log_file)
+  File "validate", line 486, in tab1reader
+    tab2reader(ERRTab1List, log_file, df, sheet, xlsx)
+  File "validate", line 983, in tab2reader
+    print("Total number of rows FLAGGED        : {} (Row {})".format(len(single_values), ', '.join(single_values)), file = log_file)
+TypeError: sequence item 0: expected str instance, int found
