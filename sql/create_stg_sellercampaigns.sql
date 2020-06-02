@@ -1,4 +1,4 @@
-create table us_gtmsales.stg_sellercampaigns
+create table us_gtmsales.stg_sellercampaigns_v1
 (
 	selleruid integer not null,
 	sellercompanyname varchar(50) not null,
