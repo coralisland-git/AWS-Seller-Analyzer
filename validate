@@ -149,7 +149,7 @@ def filenmcheck(log_file):
         print("No such file:", get_src_file_path())
         # all done
         return
-    print("\n", file=log_file)
+    print("\n", file=log_file)    
     if flag == 0:
         # --------- CHECKING IF SELLER NAME PRESENT IN DATABASE ---------
         print("\n2. Seller Company Name Validation (Checks the existance of sellername from the File name in the Database table : mst_SellerParticipants)", file = log_file)
@@ -867,16 +867,14 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
                 account_name = sheet1.cell_value(y, i)
                 if account_name in [None, '']:
                     continue
-
                 try:
-                    if type(account_name) == str and regex.search(account_name) == None \
-                            and len(account_name) <= 50:
+                    if type(account_name) == str:
                         account_name
                     else:
                         Account_Name_error += 1
                         print("Account Name Error on", "Row:", y + 1, "Column:", i + 1, "Value:", account_name, file=log_file)
                 except:
-                    Account_Name_error += 1
+                    Account_Name_error += 1                    
                     print("Account Name Error on", "Row:", y + 1, "Column:", i + 1, "Value:", account_name, file=log_file)
             passed = numrows - Account_Name_error
             if Account_Name_error == 0 and one_based_column_position not in Column_missing_tab2:
@@ -897,10 +895,9 @@ def tab2reader(ERRTab1List, log_file, df, sheet, xlsx):
                 if account_id in [None, '']:
                     continue
 
-                try:
-                    data = int(account_id)
-                    datastr = str(data)
-                    if (type(data) == int) and (len(datastr) <= 50):
+                try:                    
+                    datastr = str(account_id)
+                    if len(datastr) <= 50:
                         account_id
                     else:
                         Account_Id += 1
@@ -1215,33 +1212,31 @@ def Rule_3Check(ERRTab1List, ERRTab2List, ERRTab3List, log_file, df, sheet, shee
     else:
         print("Validate number of campaign name and campaign ID pairs in Tab 3 : PASS", file=log_file)
 
-    if len(list_Unique_1) == len(list_Unique_2) == len(list_Unique_3):
-        set_x = set([i[0] for i in list_Unique_1])
-        set_y = set([i[0] for i in list_Unique_2])
+    list_Unique_mix = list_Unique_1
+    for unique in list_Unique_2:
+        if unique not in list_Unique_mix:
+            list_Unique_mix.append(unique)
+
+    if len(list_Unique_mix) == len(list_Unique_3):
+        set_x = set([i[0] for i in list_Unique_mix])
         set_z = set([i[0] for i in list_Unique_3])
-        if set_x == set_y == set_z:
-            print("Validate number of campaign name and campaign ID pairs between Tab 1, Tab 2 and Tab 3 are consistent : PASS", file=log_file)
+        if set_x == set_z:
+            print("Validate number of campaign name and campaign ID pairs between Tab 1 + Tab 2 and Tab 3 are consistent : PASS", file=log_file)
         else:
             Duplicampaign += 1
-            print("Validate number of campaign name and campaign ID pairs in Tab 3 are consistent : FAIL", file=log_file)
-            print("Tab1 List :", file=log_file)
-            for index in range(0, len(list_Unique_1)):
-                print(list_Unique_1[index], file=log_file)
-            print("Tab2 List :", file=log_file)
-            for index in range(0, len(list_Unique_2)):
-                print(list_Unique_2[index], file=log_file)
+            print("Validate number of campaign name and campaign ID pairs between Tab 1 + Tab 2 and Tab 3 are consistent : FAIL", file=log_file)
+            print("Tab1 + Tab2 List :", file=log_file)
+            for index in range(0, len(list_Unique_mix)):
+                print(list_Unique_mix[index], file=log_file)            
             print("Tab3 List :", file=log_file)
             for index in range(0, len(list_Unique_3)):
                 print(list_Unique_3[index], file=log_file)
     else:
         Duplicampaign += 1
-        print("Validate number of campaign name and campaign ID pairs in Tab 3 are consistent : FAIL", file=log_file)
-        print("Tab1 List :", file=log_file)
-        for index in range(0, len(list_Unique_1)):
-            print(list_Unique_1[index], file=log_file)
-        print("Tab2 List :", file=log_file)
-        for index in range(0, len(list_Unique_2)):
-            print(list_Unique_2[index], file=log_file)
+        print("Validate number of campaign name and campaign ID pairs between Tab 1 + Tab 2 and Tab 3 are consistent : FAIL", file=log_file)
+        print("Tab1 + Tab2 List :", file=log_file)
+        for index in range(0, len(list_Unique_mix)):
+            print(list_Unique_mix[index], file=log_file)
         print("\nTab3 List :", file=log_file)
         for index in range(0, len(list_Unique_3)):
             print(list_Unique_3[index], file=log_file)

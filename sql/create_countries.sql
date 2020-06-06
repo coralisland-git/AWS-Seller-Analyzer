@@ -59,7 +59,7 @@ insert into us_gtmsales.countries (country_id, country_name, country_code, count
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (41, 'CONGO, DEMOCRATIC REPUBLIC', 'CD','COD','EMEA');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (42, 'CENTRAL AFRICAN REPUBLIC', 'CF','CAF','EMEA');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (43, 'CONGO', 'CG','COG','EMEA');
-insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (43, 'Congo (Brazzaville)', 'CG','COG','APAC');
+insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (43, 'CONGO (BRAZZAVILLE)', 'CG','COG','APAC');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (44, 'SWITZERLAND', 'CH','CHE','EMEA');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (45, 'COTE DIVOIRE', 'CI','CIV','EMEA');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (45, 'COTE D''IVOIRE', 'CI','CIV','EMEA');
@@ -154,7 +154,7 @@ insert into us_gtmsales.countries (country_id, country_name, country_code, count
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (124, 'KOREA, REPUBLIC OF (SOUTH KOREA)', 'KR','KOR','APAC');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (124, 'KOREA, SOUTH', 'KR','KOR','APAC');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (124, 'SOUTH KOREA', 'KR','KOR','APAC');
-insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (124, 'Korea (South)', 'KR','KOR','APAC');
+insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (124, 'KOREA (SOUTH)', 'KR','KOR','APAC');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (124, 'REPUBLIC OF KOREA', 'KR','KOR','APAC');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (125, 'KUWAIT', 'KU','KWT','EMEA');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (125, 'KUWAIT', 'KW','KWT','EMEA');
@@ -314,3 +314,4 @@ insert into us_gtmsales.countries (country_id, country_name, country_code, count
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (253, 'YUGOSLAVIA', 'YU','YUG','EMEA');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (254, 'EAST TIMOR', 'TP','TMP','APAC');
 insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (255, 'KOSOVO', 'XK','RKS','EMEA');
+insert into us_gtmsales.countries (country_id, country_name, country_code, country_code_iso_3a, geo_code) values (256, 'SOMALILAND', 'SO','SOM','EMEA');
