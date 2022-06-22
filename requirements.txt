@@ -4,7 +4,7 @@ docutils==0.15.2
 et-xmlfile==1.0.1
 jdcal==1.4.1
 jmespath==0.9.5
-numpy==1.18.2
+numpy==1.22.0
 openpyxl==3.0.3
 pandas==1.0.3
 psycopg2-binary==2.8.5
